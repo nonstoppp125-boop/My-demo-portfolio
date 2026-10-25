@@ -1,1 +1,163 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b14">
+  <meta name="description" content="A Data Analyst portfolio showcasing analytics projects, SQL, Excel, Power BI and problem-solving skills.">
+  <title>YOUR NAME | Data Analyst Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="progress-bar" id="progressBar"></div>
+
+  <header class="navbar">
+    <a href="#home" class="logo"><span class="logo-mark">A</span> YOUR<span class="accent">PORTFOLIO</span></a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <nav id="navMenu">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact" class="nav-cta">Contact ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section" id="home">
+      <div class="hero-copy reveal">
+        <div class="status"><span class="status-dot"></span> BUILDING MY ANALYTICS JOURNEY</div>
+        <p class="eyebrow">DATA ANALYST · PROBLEM SOLVER</p>
+        <h1>I turn raw data into <span class="gradient-text">meaningful insights.</span></h1>
+        <p class="hero-description">I am learning to transform complex data into clear stories, actionable insights, and smarter business decisions through analytics.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">Explore Projects <span>↗</span></a>
+          <a class="btn btn-secondary" href="#contact">Let's Connect</a>
+        </div>
+        <div class="hero-meta">
+          <span><span class="meta-icon">⌘</span> SQL & Analytics</span>
+          <span><span class="meta-icon">▦</span> Data Visualization</span>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="dashboard">
+          <div class="dash-top"><span>ANALYTICS OVERVIEW</span><span class="live-dot">● LIVE DESIGN</span></div>
+          <div class="dash-title">Data tells a story.</div>
+          <div class="metric-grid">
+            <div class="metric"><span>REVENUE</span><strong>$48.2K</strong><small>Demo metric</small></div>
+            <div class="metric"><span>ORDERS</span><strong>1,284</strong><small>Demo metric</small></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-heading"><span>Monthly performance</span><span>Sample data</span></div>
+            <div class="chart">
+              <div class="chart-grid"></div>
+              <svg viewBox="0 0 340 140" preserveAspectRatio="none" role="img" aria-label="Illustrative sample performance line chart">
+                <defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b7cff" stop-opacity=".4"/><stop offset="100%" stop-color="#8b7cff" stop-opacity="0"/></linearGradient></defs>
+                <path d="M0 112 C25 104 28 77 55 89 S90 105 115 65 S155 80 180 52 S225 73 250 32 S290 52 340 10 L340 140 L0 140Z" fill="url(#chartFill)"/>
+                <path d="M0 112 C25 104 28 77 55 89 S90 105 115 65 S155 80 180 52 S225 73 250 32 S290 52 340 10" fill="none" stroke="#a89bff" stroke-width="3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="chart-labels"><span>JAN</span><span>MAR</span><span>MAY</span><span>JUL</span><span>SEP</span><span>DEC</span></div>
+          </div>
+          <div class="dash-bottom"><span><i class="legend-dot purple"></i> Performance</span><span>Illustrative dashboard</span></div>
+        </div>
+        <div class="floating-tag tag-top">✳ Data-driven thinking</div>
+        <div class="floating-tag tag-bottom">⌘ Turning data into value</div>
+      </div>
+    </section>
+
+    <section class="trust-strip">
+      <span>MY LEARNING TOOLKIT</span>
+      <div class="tool-list"><span>SQL</span><span>EXCEL</span><span>POWER BI</span><span>PYTHON</span><span>STATISTICS</span></div>
+    </section>
+
+    <section class="section about-section" id="about">
+      <div class="section-heading reveal"><p class="eyebrow">01 — ABOUT ME</p><h2>Curiosity meets <span class="gradient-text">analytics.</span></h2><p class="section-description">My goal is to solve real problems, not just create charts.</p></div>
+      <div class="about-grid">
+        <div class="about-card reveal"><div class="about-icon">⌘</div><h3>Analytical mindset</h3><p>Learning to ask the right questions, investigate patterns, and understand why numbers change.</p></div>
+        <div class="about-card reveal"><div class="about-icon">◈</div><h3>Practical learning</h3><p>Building hands-on projects to apply SQL, spreadsheets, statistics, and visualization.</p></div>
+        <div class="about-card reveal"><div class="about-icon">↗</div><h3>Business impact</h3><p>Working toward clear recommendations that help people make better decisions.</p></div>
+      </div>
+    </section>
+
+    <section class="section skills-section" id="skills">
+      <div class="section-heading reveal"><p class="eyebrow">02 — SKILLS & TOOLS</p><h2>My <span class="gradient-text">analytics toolkit.</span></h2><p class="section-description">A learning roadmap, with room to grow through real projects.</p></div>
+      <div class="skills-grid">
+        <article class="skill-card reveal"><div class="skill-head"><span class="skill-icon orange">▤</span><span class="skill-status">LEARNING</span></div><h3>Excel & Spreadsheets</h3><p>Data cleaning, formulas, pivot tables and reporting.</p><div class="skill-track"><span style="width:35%"></span></div></article>
+        <article class="skill-card reveal"><div class="skill-head"><span class="skill-icon blue">⌘</span><span class="skill-status">LEARNING</span></div><h3>SQL</h3><p>Filtering, joins, aggregations, subqueries and analysis.</p><div class="skill-track"><span style="width:40%"></span></div></article>
+        <article class="skill-card reveal"><div class="skill-head"><span class="skill-icon yellow">▥</span><span class="skill-status">ROADMAP</span></div><h3>Power BI</h3><p>Interactive dashboards, data models and DAX.</p><div class="skill-track"><span style="width:15%"></span></div></article>
+        <article class="skill-card reveal"><div class="skill-head"><span class="skill-icon green">∑</span><span class="skill-status">LEARNING</span></div><h3>Statistics</h3><p>Descriptive statistics, probability, testing and interpretation.</p><div class="skill-track"><span style="width:30%"></span></div></article>
+        <article class="skill-card reveal"><div class="skill-head"><span class="skill-icon pink">⌘</span><span class="skill-status">ROADMAP</span></div><h3>Python</h3><p>Data manipulation, pandas and exploratory analysis.</p><div class="skill-track"><span style="width:10%"></span></div></article>
+        <article class="skill-card reveal"><div class="skill-head"><span class="skill-icon purple">◉</span><span class="skill-status">PRACTICING</span></div><h3>Problem Solving</h3><p>KPI analysis, root causes, business questions and insights.</p><div class="skill-track"><span style="width:30%"></span></div></article>
+      </div>
+      <p class="note">Skill indicators are illustrative placeholders. Update them to reflect your actual abilities.</p>
+    </section>
+
+    <section class="section projects-section" id="projects">
+      <div class="section-heading reveal"><p class="eyebrow">03 — SELECTED WORK</p><h2>Projects with a <span class="gradient-text">purpose.</span></h2><p class="section-description">Demonstrations of the kinds of business problems I plan to solve.</p></div>
+      <div class="filters reveal" id="projectFilters">
+        <button class="filter-btn active" data-filter="all">All projects</button>
+        <button class="filter-btn" data-filter="sql">SQL</button>
+        <button class="filter-btn" data-filter="excel">Excel</button>
+        <button class="filter-btn" data-filter="bi">Power BI</button>
+        <button class="filter-btn" data-filter="stats">Statistics</button>
+      </div>
+      <div class="projects-grid">
+        <article class="project-card reveal" data-category="sql">
+          <div class="project-art art-purple"><span class="art-label">SQL · DEMO CONCEPT</span><div class="code-art"><span>SELECT</span> product, <span>SUM</span>(sales)<br><span>FROM</span> orders<br><span>GROUP BY</span> product;</div><span class="art-number">01</span></div>
+          <div class="project-content"><div class="tag-row"><span>SQL</span><span>Business analysis</span></div><h3>Retail Sales Analysis</h3><p>Explore sales trends, top products and customer purchasing patterns using a sample dataset.</p><div class="project-footer"><span>Planned project</span><span>↗</span></div></div>
+        </article>
+        <article class="project-card reveal" data-category="excel">
+          <div class="project-art art-green"><span class="art-label">EXCEL · DEMO CONCEPT</span><div class="spreadsheet"><span>MONTH</span><span>SALES</span><span>PROFIT</span><b>Jan</b><b>12,400</b><b>3,200</b><b>Feb</b><b>15,800</b><b>4,100</b><b>Mar</b><b>18,200</b><b>5,000</b></div><span class="art-number">02</span></div>
+          <div class="project-content"><div class="tag-row"><span>Excel</span><span>Reporting</span></div><h3>Sales Performance Report</h3><p>Plan a spreadsheet report with cleaned data, pivot tables and business KPIs.</p><div class="project-footer"><span>Planned project</span><span>↗</span></div></div>
+        </article>
+        <article class="project-card reveal" data-category="bi">
+          <div class="project-art art-blue"><span class="art-label">POWER BI · DEMO CONCEPT</span><div class="mini-dashboard"><div><small>REVENUE</small><b>$82K</b></div><div><small>ORDERS</small><b>2.4K</b></div><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><span class="art-number">03</span></div>
+          <div class="project-content"><div class="tag-row"><span>Power BI</span><span>Visualization</span></div><h3>Executive KPI Dashboard</h3><p>Design a dashboard concept for revenue, orders, profitability and business trends.</p><div class="project-footer"><span>Planned project</span><span>↗</span></div></div>
+        </article>
+        <article class="project-card reveal" data-category="stats">
+          <div class="project-art art-orange"><span class="art-label">STATISTICS · DEMO CONCEPT</span><div class="stat-art"><div style="height:36%"></div><div style="height:55%"></div><div style="height:46%"></div><div style="height:76%"></div><div style="height:63%"></div><div style="height:91%"></div><div style="height:72%"></div></div><span class="art-number">04</span></div>
+          <div class="project-content"><div class="tag-row"><span>Statistics</span><span>Experiments</span></div><h3>Campaign Performance Study</h3><p>Explore conversion rates, compare groups and investigate whether observed changes matter.</p><div class="project-footer"><span>Planned project</span><span>↗</span></div></div>
+        </article>
+      </div>
+      <p class="note">These are portfolio concepts, not completed client work. Replace them with real projects, datasets, findings and GitHub links as you build them.</p>
+    </section>
+
+    <section class="section process-section">
+      <div class="section-heading reveal"><p class="eyebrow">04 — MY APPROACH</p><h2>From question to <span class="gradient-text">insight.</span></h2></div>
+      <div class="process-grid reveal">
+        <div class="process-step"><span>01</span><h3>Ask</h3><p>Define the business problem.</p></div>
+        <div class="process-step"><span>02</span><h3>Prepare</h3><p>Collect, inspect and clean data.</p></div>
+        <div class="process-step"><span>03</span><h3>Analyze</h3><p>Find patterns and explain changes.</p></div>
+        <div class="process-step"><span>04</span><h3>Communicate</h3><p>Present evidence and recommendations.</p></div>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="contact-card reveal">
+        <p class="eyebrow">05 — GET IN TOUCH</p>
+        <h2>Let's turn questions into <span class="gradient-text">answers.</span></h2>
+        <p>Interested in analytics, collaboration or sharing knowledge? Connect with me online.</p>
+        <div class="contact-actions">
+          <a class="btn btn-primary" id="emailLink" href="mailto:YOUR_EMAIL@example.com">Email Me ↗</a>
+          <a class="btn btn-secondary" id="githubLink" href="https://github.com/YOUR_USERNAME" target="_blank" rel="noopener noreferrer">GitHub Profile ↗</a>
+          <a class="btn btn-secondary" id="linkedinLink" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        </div>
+        <p class="note">Replace the example email and profile links with your own before publishing.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><a href="#home" class="logo"><span class="logo-mark">A</span> YOUR<span class="accent">PORTFOLIO</span></a><p>Designed with curiosity. Built for continuous learning.</p><a href="#home" class="back-top">Back to top ↑</a></footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
