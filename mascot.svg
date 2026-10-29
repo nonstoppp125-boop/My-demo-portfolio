@@ -1,60 +1,65 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+<svg xmlns="http://w3.org" viewBox="0 0 400 400" width="100%" height="100%">
   <defs>
-    <radialGradient id="body" cx=".35" cy=".3" r=".85">
-      <stop offset="0" stop-color="#ffffff" stop-opacity=".6"/>
-      <stop offset=".45" stop-color="#99ffff" stop-opacity=".16"/>
-      <stop offset="1" stop-color="#112233" stop-opacity=".6"/>
-    </radialGradient>
-    <radialGradient id="rim" cx=".5" cy=".5" r=".5">
-      <stop offset=".85" stop-color="#ffffff" stop-opacity="0"/>
-      <stop offset="1" stop-color="#ffffff" stop-opacity=".35"/>
-    </radialGradient>
-    <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="3" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <!-- Rich Sci-Fi Gradient Maps -->
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.18)" />
+      <stop offset="60%" stop-color="rgba(255, 255, 255, 0.03)" />
+      <stop offset="100%" stop-color="rgba(168, 85, 247, 0.12)" />
+    </linearGradient>
+    <linearGradient id="visorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="100%" stop-color="#4facfe" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+    
+    <!-- Outer Glow Defs -->
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
 
-  <style>
-    .eye { fill: var(--accent, #35d7ee); transform-box: fill-box; transform-origin: center; animation: blink 4s infinite; }
-    .mini { animation: bob 5s ease-in-out infinite alternate; }
-    .mini.b { animation-delay: -2s; }
-    @keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
-    @keyframes bob { to { transform: translateY(-8px); } }
-    @media (prefers-reduced-motion: reduce) { .eye, .mini { animation: none; } }
-  </style>
-
-  <!-- ground shadow -->
-  <ellipse cx="100" cy="190" rx="46" ry="6" fill="#000" opacity=".35" filter="url(#soft)"/>
-
-  <!-- body -->
-  <circle cx="100" cy="100" r="78" fill="url(#body)" stroke="#ffffff" stroke-opacity=".5" stroke-width="1.5"/>
-  <circle cx="100" cy="100" r="78" fill="url(#rim)"/>
-
-  <!-- highlights -->
-  <path d="M50 66a60 60 0 0 1 58-32" stroke="#fff" stroke-opacity=".8" stroke-width="5" stroke-linecap="round" fill="none"/>
-  <path d="M62 52a48 48 0 0 1 20-12" stroke="#fff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round" fill="none"/>
-  <path d="M140 150a62 62 0 0 0 22-40" stroke="#fff" stroke-opacity=".28" stroke-width="4" stroke-linecap="round" fill="none"/>
-
-  <!-- eyes -->
-  <g id="eyes" filter="url(#glow)">
-    <rect class="eye" x="70" y="84" width="14" height="34" rx="7"/>
-    <rect class="eye" x="116" y="84" width="14" height="34" rx="7"/>
+  <!-- Ambient Jetpack / Energy Rings Behind Body -->
+  <g filter="url(#neonGlow)">
+    <circle cx="200" cy="270" r="65" fill="none" stroke="url(#accentGrad)" stroke-width="4" opacity="0.6"/>
+    <ellipse cx="200" cy="340" rx="40" ry="12" fill="#00f2fe" opacity="0.4" filter="url(#neonGlow)"/>
   </g>
 
-  <!-- cheeks + smile -->
-  <ellipse cx="58" cy="124" rx="10" ry="6" fill="#ff7ab8" opacity=".28"/>
-  <ellipse cx="142" cy="124" rx="10" ry="6" fill="#ff7ab8" opacity=".28"/>
-  <path d="M90 128q10 8 20 0" stroke="var(--accent, #35d7ee)" stroke-width="3" stroke-linecap="round" fill="none" opacity=".8"/>
+  <!-- Main Levitating Floating Platform Capsule Base -->
+  <path d="M 120 320 Q 200 360 280 320 Q 200 330 120 320 Z" fill="url(#accentGrad)" opacity="0.7"/>
 
-  <!-- tiny floating bubbles -->
-  <g class="mini">
-    <circle cx="172" cy="42" r="9" fill="url(#body)" stroke="#fff" stroke-opacity=".5"/>
-    <circle cx="169" cy="39" r="2.5" fill="#fff" opacity=".8"/>
+  <!-- Left Secondary Support Arm -->
+  <path d="M 100 210 Q 70 230 90 260" fill="none" stroke="url(#bodyGrad)" stroke-width="24" stroke-linecap="round"/>
+
+  <!-- Waving Interactive Right Arm (Targeted by JS Animation Matrix) -->
+  <g id="mascotWavingArm">
+    <path d="M 300 210 Q 340 200 350 160" fill="none" stroke="url(#bodyGrad)" stroke-width="24" stroke-linecap="round"/>
+    <circle cx="350" cy="155" r="14" fill="url(#accentGrad)"/>
   </g>
-  <g class="mini b">
-    <circle cx="28" cy="70" r="6" fill="url(#body)" stroke="#fff" stroke-opacity=".5"/>
-    <circle cx="26" cy="68" r="1.8" fill="#fff" opacity=".8"/>
+
+  <!-- Central Translucent Engineered Glass Torso -->
+  <rect x="110" y="160" width="180" height="130" rx="60" fill="url(#bodyGrad)" stroke="rgba(255,255,255,0.2)" stroke-width="2" />
+  <!-- Core Internal Energy Light Node -->
+  <circle cx="200" cy="220" r="22" fill="url(#visorGrad)" opacity="0.8" filter="url(#neonGlow)"/>
+
+  <!-- Head Sphere Construction with Frosted Properties -->
+  <circle cx="200" cy="110" r="75" fill="url(#bodyGrad)" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+
+  <!-- Cybernetic Hologram Visor (Face Layer) -->
+  <rect x="145" y="80" width="110" height="45" rx="20" fill="url(#visorGrad)" filter="url(#neonGlow)" opacity="0.95"/>
+
+  <!-- Dynamic Tracker Pupils (Targeted by JS Mouse Position Vector Offset) -->
+  <g fill="#05050d">
+    <!-- Left Eye Pupil Layer -->
+    <circle class="mascot-eye-pupil" cx="180" cy="102" r="7" style="transition: transform 0.1s ease-out;"/>
+    <!-- Right Eye Pupil Layer -->
+    <circle class="mascot-eye-pupil" cx="220" cy="102" r="7" style="transition: transform 0.1s ease-out;"/>
   </g>
+
+  <!-- Antenna Nodes for Deep Network Matrix Synchronization -->
+  <line x1="200" y1="35" x2="200" y2="0" stroke="url(#accentGrad)" stroke-width="5" filter="url(#neonGlow)"/>
+  <circle cx="200" cy="0" r="8" fill="#ffffff" filter="url(#neonGlow)"/>
 </svg>
