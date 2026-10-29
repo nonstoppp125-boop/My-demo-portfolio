@@ -1,12 +1,87 @@
-<svg xmlns="http://w3.org" viewBox="0 0 100 100" width="100" height="100">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
-    <linearGradient id="fav-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#a855f7" />
-      <stop offset="100%" stop-color="#06b6d4" />
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#152b42"/>
+      <stop offset="1" stop-color="#050b14"/>
     </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e8fdff" stop-opacity=".95"/>
+      <stop offset=".45" stop-color="#86e8ff" stop-opacity=".75"/>
+      <stop offset="1" stop-color="#6d9dff" stop-opacity=".45"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.2"/>
+    </filter>
   </defs>
-  <!-- Beautiful Hexagonal Layer Geometry -->
-  <polygon points="50,5 90,28 90,72 50,95 10,72 10,28" fill="url(#fav-grad)" />
-  <polygon points="50,15 80,32 80,68 50,85 20,68 20,32" fill="#05050d" opacity="0.85" />
-  <circle cx="50" cy="50" r="15" fill="url(#fav-grad)" />
+
+  <rect x="2" y="2" width="60" height="60" rx="19"
+        fill="url(#bg)" stroke="#a8eaff" stroke-opacity=".45"/>
+
+  <circle cx="32" cy="29" r="19" fill="#75e7ff" opacity=".22"
+          filter="url(#glow)"/>
+
+  <path d="M17 27
+           C13 20 19 13 26 15
+           C30 10 39 12 42 16
+           C50 16 53 24 48 30
+           L46 40
+           C44 48 37 51 31 49
+           C22 50 17 44 18 36Z"
+        fill="url(#glass)"
+        stroke="#e2fbff"
+        stroke-opacity=".85"
+        stroke-width="1.4"/>
+
+  <path d="M18 27
+           C16 20 22 15 28 18
+           C32 13 39 15 42 19
+           C47 18 49 23 46 28
+           C41 25 37 25 33 28
+           C28 31 23 29 18 32Z"
+        fill="#baf7ff"
+        fill-opacity=".7"/>
+
+  <path d="M23 20 C27 16 33 16 37 19"
+        fill="none" stroke="url(#shine)" stroke-width="2"
+        stroke-linecap="round"/>
+
+  <ellipse cx="26" cy="33" rx="2.1" ry="3"
+           fill="#10243a"/>
+  <ellipse cx="39" cy="33" rx="2.1" ry="3"
+           fill="#10243a"/>
+
+  <circle cx="26.7" cy="32" r=".75" fill="#ffffff"/>
+  <circle cx="39.7" cy="32" r=".75" fill="#ffffff"/>
+
+  <ellipse cx="22.5" cy="38" rx="3" ry="1.5"
+           fill="#ffacd2" opacity=".8"/>
+  <ellipse cx="42.5" cy="38" rx="3" ry="1.5"
+           fill="#ffacd2" opacity=".8"/>
+
+  <path d="M29 39 Q32 42 35 39"
+        fill="none" stroke="#18364b" stroke-width="1.5"
+        stroke-linecap="round"/>
+
+  <path d="M24 45 L22 49 M41 45 L43 49"
+        stroke="#c6f8ff" stroke-width="1.7"
+        stroke-linecap="round"/>
+
+  <path d="M20 52 Q32 47 44 52 L46 56 L18 56Z"
+        fill="#9beaff" fill-opacity=".72"
+        stroke="#d9fbff" stroke-opacity=".8"/>
+
+  <path d="M24 52 L40 52"
+        stroke="#ffffff" stroke-opacity=".75"
+        stroke-width="1.2" stroke-linecap="round"/>
+
+  <path d="M49 10 L50.5 14.5 L55 16 L50.5 17.5 L49 22
+           L47.5 17.5 L43 16 L47.5 14.5Z"
+        fill="#dffaff"/>
+
+  <circle cx="13" cy="39" r="1.4" fill="#a5f0ff"/>
+  <circle cx="51" cy="43" r="1.2" fill="#c3b2ff"/>
 </svg>
