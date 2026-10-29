@@ -1,283 +1,178 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="BilloDesign — web design and Webflow development portfolio.">
-<meta name="theme-color" content="#04060a">
-<title>BilloDesign — Portfolio</title>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Glassmorphism Portfolio Workspace</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cloudflare.com">
 </head>
 <body>
 
-<!-- ============ BACKGROUND LAYER (fixed, always visible) ============ -->
-<div class="bg" aria-hidden="true">
-  <div class="beam"></div>
-  <div class="orb o1"></div>
-  <div class="orb o2"></div>
-  <div class="orb o3"></div>
-  <i class="shape plate p1" style="--d:40;--r:-8deg"></i>
-  <i class="shape plate p2" style="--d:70;--r:6deg"></i>
-  <i class="shape plate p3" style="--d:25;--r:12deg"></i>
-  <i class="shape cube c1" style="--d:55;--r:14deg"></i>
-  <i class="shape cube c2" style="--d:90;--r:-20deg"></i>
-  <i class="shape cube c3" style="--d:35;--r:30deg"></i>
-  <i class="shape ball b1" style="--d:60"></i>
-  <i class="shape ball b2" style="--d:110"></i>
-  <i class="shape ball b3" style="--d:75"></i>
-  <i class="shape tri t1" style="--d:80;--r:10deg"></i>
-  <i class="shape tri t2" style="--d:45;--r:-25deg"></i>
-  <i class="shape ring r1" style="--d:65"></i>
-</div>
+    <!-- SVG Filters for Advanced Liquid Glass Effects -->
+    <svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1" xmlns="http://w3.org" xmlns:xlink="http://w3.org">
+        <defs>
+            <filter id="liquid-glass">
+                <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" />
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="25" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
 
-<!-- ============ LAMP: light on/off only by pulling the rope ============ -->
-<div class="lamp" id="lamp" aria-label="Pull the rope to switch the light">
-  <div class="wire"></div>
-  <div class="globe"><div class="core"></div></div>
-  <div class="cord">
-    <span class="pull" role="button" tabindex="0" aria-label="Pull the rope"></span>
-  </div>
-</div>
+    <!-- Canvas for Mouse Particle Fluid Interaction Behind Glass -->
+    <canvas id="particleCanvas"></canvas>
 
-<!-- ============ HEADER ============ -->
-<header class="top">
-  <a class="logo" href="#home" aria-label="BilloDesign home">BilloDesign</a>
-  <nav aria-label="Main">
-    <a href="#services">Services</a>
-    <a href="#work">Portfolio</a>
-    <a href="#about">About me</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
-
-<main>
-
-  <!-- ===== HERO ===== -->
-  <section id="home" class="hero">
-    <p class="muted">Web designer &amp; Webflow developer</p>
-    <h1>Future-proof digital experiences.</h1>
-    <p class="lead">Concept theke clean code porjonto — ami design kori, ar ami-i build kori.</p>
-    <div class="row">
-      <a class="btn glass" href="#work">See my work</a>
-      <a class="btn glass" href="#contact">Start a project</a>
+    <!-- 3D Moving Ambient Background Orbs -->
+    <div class="ambient-universe">
+        <div class="orb orb-primary" id="orb1"></div>
+        <div class="orb orb-secondary" id="orb2"></div>
+        <div class="orb orb-tertiary" id="orb3"></div>
+        <div class="orb orb-quaternary" id="orb4"></div>
     </div>
-    <p class="hint muted">Box-e angul rekhe tano · Lamp-er rosi tano · Screen-e jekhane khushi tap koro</p>
-  </section>
 
-  <!-- ===== SERVICES ===== -->
-  <section id="services">
-    <h2>What I build</h2>
-    <p class="sub muted">Concept theke launch porjonto, ek jaygay.</p>
-    <div class="grid">
-      <article class="glass card">
-        <div class="ico" aria-hidden="true">◧</div>
-        <h3>Web Design</h3>
-        <p>UI/UX design that feels intuitive, intelligent, and on-brand.</p>
-        <ul class="tags"><li>UI</li><li>UX</li><li>Brand</li><li>Prototype</li></ul>
-      </article>
-      <article class="glass card">
-        <div class="ico" aria-hidden="true">◉</div>
-        <h3>Webflow Development</h3>
-        <p>Lightning-fast, scalable websites built with clean code.</p>
-        <ul class="tags"><li>Webflow</li><li>CMS</li><li>Interactions</li><li>Custom code</li></ul>
-      </article>
-      <article class="glass card">
-        <div class="ico" aria-hidden="true">◔</div>
-        <h3>Performance &amp; SEO</h3>
-        <p>Optimized for speed, search, and seamless experience.</p>
-        <ul class="tags"><li>Core Web Vitals</li><li>Schema</li><li>Analytics</li></ul>
-      </article>
+    <!-- Active Interactive Mascot Overlay Background Container -->
+    <div class="mascot-backdrop-container" id="mascotWrapper">
+        <!-- Embedded SVG Object dynamically tracked by JS -->
+        <object type="image/svg+xml" data="mascot.svg" id="interactiveMascot"></object>
     </div>
-  </section>
 
-  <!-- ===== PROCESS (real sequence, so numbered) ===== -->
-  <section id="process">
-    <h2>How a project runs</h2>
-    <ol class="steps">
-      <li class="glass step"><span class="n">1</span><h3>Talk</h3><p>Goal, audience ar timeline niye kotha.</p></li>
-      <li class="glass step"><span class="n">2</span><h3>Design</h3><p>Wireframe theke full visual design.</p></li>
-      <li class="glass step"><span class="n">3</span><h3>Build</h3><p>Webflow-e clean, responsive build.</p></li>
-      <li class="glass step"><span class="n">4</span><h3>Launch</h3><p>Speed, SEO check ar publish.</p></li>
-    </ol>
-  </section>
+    <!-- Ultra-Glass Modern Workspace Container -->
+    <div class="master-workspace-glass">
+        
+        <!-- Left Glass Dashboard Controls / Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="brand-panel">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-compass-drafting"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>CREATIVE</h2>
+                    <span>WORKSPACE v2.5</span>
+                </div>
+            </div>
 
-  <!-- ===== PORTFOLIO ===== -->
-  <section id="work">
-    <h2>Selected work</h2>
-    <div class="grid">
-      <article class="glass card work">
-        <div class="thumb t1" role="img" aria-label="Lumina dashboard preview"></div>
-        <h3>Lumina Dashboard</h3><p>Analytics UI with glass panels.</p>
-        <ul class="tags"><li>Dashboard</li><li>UI</li></ul>
-      </article>
-      <article class="glass card work">
-        <div class="thumb t2" role="img" aria-label="Orbit studio preview"></div>
-        <h3>Orbit Studio</h3><p>Agency site with a motion system.</p>
-        <ul class="tags"><li>Webflow</li><li>Motion</li></ul>
-      </article>
-      <article class="glass card work">
-        <div class="thumb t3" role="img" aria-label="Nova store preview"></div>
-        <h3>Nova Store</h3><p>Fast Webflow e-commerce build.</p>
-        <ul class="tags"><li>E-commerce</li><li>SEO</li></ul>
-      </article>
-      <article class="glass card work">
-        <div class="thumb t4" role="img" aria-label="Pulse app preview"></div>
-        <h3>Pulse App</h3><p>Landing page for a fitness app.</p>
-        <ul class="tags"><li>Landing</li><li>Brand</li></ul>
-      </article>
-      <article class="glass card work">
-        <div class="thumb t5" role="img" aria-label="Kora portfolio preview"></div>
-        <h3>Kora Portfolio</h3><p>Photographer's CMS-driven gallery.</p>
-        <ul class="tags"><li>CMS</li><li>Gallery</li></ul>
-      </article>
-      <article class="glass card work">
-        <div class="thumb t6" role="img" aria-label="Zen blog preview"></div>
-        <h3>Zen Blog</h3><p>Reading-first editorial layout.</p>
-        <ul class="tags"><li>Blog</li><li>Typography</li></ul>
-      </article>
-    </div>
-  </section>
+            <!-- Dynamic Theme Engine Panel inside Glass -->
+            <div class="theme-engine-card">
+                <span class="control-label"><i class="fa-solid fa-palette"></i> Chromatic Aura Engine</span>
+                <div class="theme-switches-grid">
+                    <button class="theme-btn active" data-hue="280" data-sat="85%" data-light="60%" style="background: linear-gradient(135deg, #a855f7, #6366f1);"></button>
+                    <button class="theme-btn" data-hue="190" data-sat="95%" data-light="50%" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"></button>
+                    <button class="theme-btn" data-hue="330" data-sat="90%" data-light="55%" style="background: linear-gradient(135deg, #ec4899, #f43f5e);"></button>
+                    <button class="theme-btn" data-hue="150" data-sat="80%" data-light="50%" style="background: linear-gradient(135deg, #10b981, #059669);"></button>
+                    <button class="theme-btn" data-hue="35" data-sat="95%" data-light="55%" style="background: linear-gradient(135deg, #f59e0b, #d97706);"></button>
+                </div>
+                <div class="slider-control">
+                    <div class="slider-header">
+                        <span>Aura Multiplier</span>
+                        <span id="auraVal">40px</span>
+                    </div>
+                    <input type="range" id="blurSlider" min="10" max="100" value="40">
+                </div>
+            </div>
 
-  <!-- ===== SKILLS ===== -->
-  <section id="skills">
-    <h2>Tools I use</h2>
-    <div class="glass card wide">
-      <ul class="tags big">
-        <li>Webflow</li><li>Figma</li><li>HTML</li><li>CSS</li><li>JavaScript</li>
-        <li>GSAP</li><li>Lottie</li><li>Spline</li><li>SEO</li><li>Lighthouse</li>
-      </ul>
-    </div>
-  </section>
+            <!-- Dashboard Nav Menu -->
+            <nav class="dashboard-navigation">
+                <a href="#matrix-home" class="nav-item active">
+                    <span class="nav-icon"><i class="fa-solid fa-cube"></i></span>
+                    <span class="nav-text">Core Matrix</span>
+                </a>
+                <a href="#lab-work" class="nav-item">
+                    <span class="nav-icon"><i class="fa-solid fa-flask-vial"></i></span>
+                    <span class="nav-text">Project Lab</span>
+                </a>
+                <a href="#terminal-connect" class="nav-item">
+                    <span class="nav-icon"><i class="fa-solid fa-terminal"></i></span>
+                    <span class="nav-text">Link Terminal</span>
+                </a>
+            </nav>
 
-  <!-- ===== TESTIMONIALS ===== -->
-  <section id="words">
-    <h2>Client words</h2>
-    <div class="grid">
-      <figure class="glass card quote">
-        <blockquote>Amader site ager cheye onek druto ar sundor holo.</blockquote>
-        <figcaption>Rafi, Startup founder</figcaption>
-      </figure>
-      <figure class="glass card quote">
-        <blockquote>Design ar code duitai ek jon-er haat-e, kaj onek shohoj.</blockquote>
-        <figcaption>Mim, Agency lead</figcaption>
-      </figure>
-      <figure class="glass card quote">
-        <blockquote>Launch-er por traffic ar ranking duitai barlo.</blockquote>
-        <figcaption>Tanvir, Shop owner</figcaption>
-      </figure>
-    </div>
-  </section>
+            <!-- Bottom Profile status bar -->
+            <div class="profile-status-bar">
+                <div class="user-avatar-zone">
+                    <i class="fa-solid fa-fingerprint"></i>
+                    <span class="pulse-online"></span>
+                </div>
+                <div class="user-meta">
+                    <h4>SYSTEM ARCHITECT</h4>
+                    <p>Secured Node: online</p>
+                </div>
+            </div>
+        </aside>
 
-  <!-- ===== ABOUT ===== -->
-  <section id="about">
-    <h2>About me</h2>
-    <div class="glass card wide">
-      <p>Ami Billo — ekjon designer ar Webflow developer. Ami simple, fast ar sundor website banai, jegulo dekhte soft kintu kajey sharp.</p>
-      <p class="muted">Drag any box to stretch it. Pull the lamp rope for light. Tap anywhere to say hi to my little friend.</p>
-    </div>
-  </section>
+        <!-- Right Content Presentation Hub -->
+        <main class="presentation-hub">
+            
+            <!-- CORE MATRIX SECTION -->
+            <section id="matrix-home" class="viewport-section active">
+                <div class="hero-glass-banner">
+                    <span class="badge"><i class="fa-solid fa-shield-halved"></i> Interactive UI Module Active</span>
+                    <h1 class="glitch-title">Architecting the Translucent Futures</h1>
+                    <p class="subtitle-text">Empowering user experiences via fluid animations, deep glassmorphism grids, and organic particle simulations wrapped in rich reactive code vectors.</p>
+                    <div class="interactive-action-row">
+                        <a href="#lab-work" class="action-glass-btn primary-intent call-to-action-trigger">Explore Vault <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        <button class="action-glass-btn alternative-intent" id="triggerMascotWave">Signal Mascot <i class="fa-solid fa-wand-magic-sparkles"></i></button>
+                    </div>
+                </div>
 
-  <!-- ===== FAQ ===== -->
-  <section id="faq">
-    <h2>Questions</h2>
-    <div class="faq">
-      <details class="glass">
-        <summary>Ekta website banate koto din lage?</summary>
-        <p>Choto site 1–2 shoptaho, boro project 4–6 shoptaho.</p>
-      </details>
-      <details class="glass">
-        <summary>Webflow-e CMS thakbe?</summary>
-        <p>Hyan, blog, portfolio ba product — sob editable thakbe.</p>
-      </details>
-      <details class="glass">
-        <summary>Launch-er pore support pabo?</summary>
-        <p>Pabe. Small fix ar update-er jonno support period thake.</p>
-      </details>
-    </div>
-  </section>
+                <!-- Feature Metrics Cluster -->
+                <div class="matrix-grid-showcase">
+                    <div class="metric-glass-card">
+                        <div class="card-icon-wrapper secondary-color"><i class="fa-solid fa-bolt-lightning"></i></div>
+                        <h3>Adaptive Styling</h3>
+                        <p>Fully dynamic real-time customized CSS variables rendering system directly updating complex shaders dynamically.</p>
+                    </div>
+                    <div class="metric-glass-card">
+                        <div class="card-icon-wrapper tertiary-color"><i class="fa-solid fa-bezier-curve"></i></div>
+                        <h3>Reactive Mascot</h3>
+                        <p>Vector system communicating with DOM cursor movements to intelligently execute complex interactive visual tracking transformations.</p>
+                    </div>
+                    <div class="metric-glass-card">
+                        <div class="card-icon-wrapper quaternary-color"><i class="fa-solid fa-fingerprint"></i></div>
+                        <h3>Glass Shaders</h3>
+                        <p>Advanced cross-browser multi-layered backdrop filters calibrated with subtle noise textures and precise border reflections.</p>
+                    </div>
+                </div>
+            </section>
 
-  <!-- ===== CONTACT ===== -->
-  <section id="contact">
-    <h2>Contact</h2>
-    <form class="glass card wide" id="cform" novalidate>
-      <label class="glass field"><span>Name</span><input name="n" required autocomplete="name"></label>
-      <label class="glass field"><span>Email</span><input name="e" type="email" required autocomplete="email"></label>
-      <label class="glass field"><span>Project type</span>
-        <select name="t"><option>Web design</option><option>Webflow build</option><option>SEO &amp; speed</option></select>
-      </label>
-      <label class="glass field"><span>Message</span><textarea name="m" rows="4" required></textarea></label>
-      <button class="btn glass" type="submit">Send message</button>
-    </form>
-  </section>
+            <!-- PROJECT LAB SECTION -->
+            <section id="lab-work" class="viewport-section">
+                <div class="section-header-row">
+                    <div>
+                        <span class="section-tag">Production Repositories</span>
+                        <h2>The Development Pipeline</h2>
+                    </div>
+                    <div class="filter-controls-glass">
+                        <button class="filter-btn active">All Nodes</button>
+                        <button class="filter-btn">Web3</button>
+                        <button class="filter-btn">AI Systems</button>
+                    </div>
+                </div>
 
-</main>
+                <div class="projects-vault-layout">
+                    <!-- Project Alpha -->
+                    <div class="vault-item-card">
+                        <div class="vault-card-body">
+                            <span class="project-node-id">NODE // 001</span>
+                            <h3>Neural Interface Engine</h3>
+                            <p>Deep dashboard system parsing multidimensional arrays rendered in optimized hardware-accelerated canvas layers.</p>
+                            <div class="tech-tag-row">
+                                <span class="tag">WebGL</span>
+                                <span class="tag">Next.js</span>
+                                <span class="tag">Tailwind</span>
+                            </div>
+                        </div>
+                        <div class="vault-card-footer">
+                            <a href="#" class="vault-link">Launch Module <i class="fa-solid fa-angle-right"></i></a>
+                        </div>
+                    </div>
 
-<footer>
-  <p class="muted">© BilloDesign</p>
-  <p class="muted small">Built with glass, light and a little bubble friend.</p>
-</footer>
-
-<!-- ============ COLOUR DOCK: one colour themes the whole site ============ -->
-<div class="dock glass" role="group" aria-label="Theme colour">
-  <button class="sw" data-h="190" style="--c:190" aria-label="Cyan"></button>
-  <button class="sw" data-h="265" style="--c:265" aria-label="Violet"></button>
-  <button class="sw" data-h="330" style="--c:330" aria-label="Pink"></button>
-  <button class="sw" data-h="150" style="--c:150" aria-label="Green"></button>
-  <button class="sw" data-h="28"  style="--c:28"  aria-label="Orange"></button>
-  <button class="sw" data-h="222" style="--c:222" aria-label="Blue"></button>
-</div>
-
-<!-- ============ MASCOT: fixed, visible on every scroll position ============ -->
-<div class="mascot" id="mascot">
-  <div class="say glass">Scroll down and I'll guide you.</div>
-  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <defs>
-      <radialGradient id="mg" cx=".35" cy=".3" r=".8">
-        <stop offset="0" stop-color="#fff" stop-opacity=".55"/>
-        <stop offset=".5" stop-color="#9ff" stop-opacity=".16"/>
-        <stop offset="1" stop-color="#123" stop-opacity=".55"/>
-      </radialGradient>
-      <filter id="mb"><feGaussianBlur stdDeviation="3"/></filter>
-    </defs>
-    <ellipse cx="100" cy="190" rx="46" ry="6" fill="#000" opacity=".35" filter="url(#mb)"/>
-    <circle cx="100" cy="100" r="78" fill="url(#mg)" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/>
-    <path d="M50 66a60 60 0 0 1 58-32" stroke="#fff" stroke-opacity=".75" stroke-width="5" stroke-linecap="round" fill="none"/>
-    <path d="M140 150a62 62 0 0 0 22-40" stroke="#fff" stroke-opacity=".25" stroke-width="4" stroke-linecap="round" fill="none"/>
-    <g id="eyes">
-      <rect class="eye" x="70" y="84" width="14" height="34" rx="7"/>
-      <rect class="eye" x="116" y="84" width="14" height="34" rx="7"/>
-    </g>
-    <ellipse cx="58" cy="124" rx="10" ry="6" fill="#ff7ab8" opacity=".25"/>
-    <ellipse cx="142" cy="124" rx="10" ry="6" fill="#ff7ab8" opacity=".25"/>
-  </svg>
-</div>
-
-<!-- ============ CHAT BOT ============ -->
-<div class="chat glass" id="chat" role="dialog" aria-label="Chat assistant">
-  <div id="log" class="log" aria-live="polite">
-    <div class="b">Hi! Ami Billo-r assistant. Kichu jiggesh korbe?</div>
-  </div>
-  <div class="chips">
-    <button class="chip" type="button">Services</button>
-    <button class="chip" type="button">Pricing</button>
-    <button class="chip" type="button">Contact</button>
-  </div>
-  <form id="chatForm">
-    <input id="msg" placeholder="Type a message" autocomplete="off" aria-label="Message">
-    <button aria-label="Send">➤</button>
-  </form>
-</div>
-<button class="chatbtn glass" id="chatBtn" aria-label="Open chat">
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h16v11H9l-5 4z"/></svg>
-  <i></i>
-</button>
-
-<div class="toast" id="toast" role="status"></div>
-
-<script src="script.js"></script>
-</body>
-</html>
+                    <!-- Project Beta -->
+                    <div class="vault-item-card">
+                        <div class="vault-card-body">
+                            <span class="project-node-id">NODE // 002</span>
+                            <h3>Ethereal DeFi Terminal</h3>
