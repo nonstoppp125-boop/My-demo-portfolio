@@ -867,19 +867,19 @@
      ---------------------------------------------------------- */
 
   function hideLoader() {
-    const loader = $(
-      "[data-page-loader], #pageLoader, .page-loader"
-    );
+  const loader = $(
+    "#preloader, [data-page-loader], #pageLoader, .page-loader"
+  );
 
-    if (!loader) return;
+  if (!loader) return;
 
-    loader.classList.add("is-loaded");
-    loader.setAttribute("aria-hidden", "true");
+  loader.classList.add("is-hidden");
+  loader.setAttribute("aria-hidden", "true");
 
-    window.setTimeout(() => {
-      loader.hidden = true;
-    }, 700);
-  }
+  window.setTimeout(() => {
+    loader.hidden = true;
+  }, 700);
+}
 
   /* ----------------------------------------------------------
      17. OPTIONAL CONTACT FORM VALIDATION
