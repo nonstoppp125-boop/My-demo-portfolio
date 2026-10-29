@@ -1,31 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+<svg xmlns="http://w3.org" viewBox="0 0 100 100" width="100" height="100">
   <defs>
-    <radialGradient id="body" cx=".35" cy=".28" r=".85">
-      <stop offset="0" stop-color="#ffffff" stop-opacity=".95"/>
-      <stop offset=".45" stop-color="#6eeaff" stop-opacity=".6"/>
-      <stop offset="1" stop-color="#0b3a4a"/>
-    </radialGradient>
-    <radialGradient id="glow" cx=".5" cy=".5" r=".5">
-      <stop offset="0" stop-color="#35d7ee" stop-opacity=".45"/>
-      <stop offset="1" stop-color="#35d7ee" stop-opacity="0"/>
-    </radialGradient>
+    <linearGradient id="fav-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
   </defs>
-
-  <!-- soft glow -->
-  <circle cx="32" cy="32" r="31" fill="url(#glow)"/>
-
-  <!-- glass bubble -->
-  <circle cx="32" cy="32" r="27" fill="url(#body)" stroke="#9ff" stroke-opacity=".75" stroke-width="1.5"/>
-
-  <!-- highlight -->
-  <path d="M15 24a19 19 0 0 1 18-10" fill="none" stroke="#fff" stroke-opacity=".85" stroke-width="3" stroke-linecap="round"/>
-  <path d="M46 46a20 20 0 0 1-9 6" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="2" stroke-linecap="round"/>
-
-  <!-- eyes -->
-  <rect x="21" y="26" width="6" height="14" rx="3" fill="#06202a"/>
-  <rect x="37" y="26" width="6" height="14" rx="3" fill="#06202a"/>
-
-  <!-- cheeks -->
-  <ellipse cx="18" cy="42" rx="4" ry="2.4" fill="#ff7ab8" opacity=".3"/>
-  <ellipse cx="46" cy="42" rx="4" ry="2.4" fill="#ff7ab8" opacity=".3"/>
+  <!-- Beautiful Hexagonal Layer Geometry -->
+  <polygon points="50,5 90,28 90,72 50,95 10,72 10,28" fill="url(#fav-grad)" />
+  <polygon points="50,15 80,32 80,68 50,85 20,68 20,32" fill="#05050d" opacity="0.85" />
+  <circle cx="50" cy="50" r="15" fill="url(#fav-grad)" />
 </svg>
