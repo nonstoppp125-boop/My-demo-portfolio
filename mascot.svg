@@ -1,65 +1,300 @@
-<svg xmlns="http://w3.org" viewBox="0 0 400 400" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" width="600" height="700" fill="none">
   <defs>
-    <!-- Rich Sci-Fi Gradient Maps -->
-    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="rgba(255, 255, 255, 0.18)" />
-      <stop offset="60%" stop-color="rgba(255, 255, 255, 0.03)" />
-      <stop offset="100%" stop-color="rgba(168, 85, 247, 0.12)" />
+    <linearGradient id="glassBody" x1="130" y1="90" x2="450" y2="590" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F3FFFC" stop-opacity=".91"/>
+      <stop offset=".22" stop-color="#A8F9E6" stop-opacity=".54"/>
+      <stop offset=".52" stop-color="#75E7D1" stop-opacity=".27"/>
+      <stop offset=".78" stop-color="#A4E9F4" stop-opacity=".48"/>
+      <stop offset="1" stop-color="#E7FFFF" stop-opacity=".76"/>
     </linearGradient>
-    <linearGradient id="visorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#00f2fe" />
-      <stop offset="100%" stop-color="#4facfe" />
+    <linearGradient id="hairGlass" x1="165" y1="95" x2="420" y2="295" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity=".96"/>
+      <stop offset=".23" stop-color="#B7FFF0" stop-opacity=".88"/>
+      <stop offset=".55" stop-color="#73DCCF" stop-opacity=".74"/>
+      <stop offset=".78" stop-color="#B5DFFF" stop-opacity=".78"/>
+      <stop offset="1" stop-color="#F6FFFF" stop-opacity=".96"/>
     </linearGradient>
-    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#a855f7" />
-      <stop offset="100%" stop-color="#ec4899" />
+    <linearGradient id="faceGlass" x1="205" y1="180" x2="397" y2="405" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4FFFC" stop-opacity=".82"/>
+      <stop offset=".45" stop-color="#D2FFF5" stop-opacity=".53"/>
+      <stop offset="1" stop-color="#80E4D9" stop-opacity=".43"/>
     </linearGradient>
-    
-    <!-- Outer Glow Defs -->
-    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="12" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    <linearGradient id="shirtGlass" x1="180" y1="410" x2="420" y2="585" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity=".91"/>
+      <stop offset=".35" stop-color="#D8FFF7" stop-opacity=".67"/>
+      <stop offset=".75" stop-color="#9FE5E7" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#F4FFFF" stop-opacity=".87"/>
+    </linearGradient>
+    <linearGradient id="shoeGlass" x1="205" y1="575" x2="405" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#244D58"/>
+      <stop offset=".45" stop-color="#478D94"/>
+      <stop offset=".72" stop-color="#173A49"/>
+      <stop offset="1" stop-color="#9BF6EA"/>
+    </linearGradient>
+    <linearGradient id="tieGlass" x1="287" y1="430" x2="322" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2C7880"/>
+      <stop offset=".5" stop-color="#16434F"/>
+      <stop offset="1" stop-color="#73D7CD"/>
+    </linearGradient>
+    <radialGradient id="cheekGlow">
+      <stop stop-color="#FF9CBF" stop-opacity=".72"/>
+      <stop offset="1" stop-color="#FF9CBF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orbGlow">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset=".35" stop-color="#D9FFF8" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#7AEBDD" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bubbleGlass" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#FFFFFF" stop-opacity=".85"/>
+      <stop offset=".42" stop-color="#A8F8EB" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#B7DFFF" stop-opacity=".48"/>
+    </linearGradient>
+    <linearGradient id="laptopMetal" x1="245" y1="405" x2="365" y2="505" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F7FFFF"/>
+      <stop offset=".35" stop-color="#B8D4D9"/>
+      <stop offset=".7" stop-color="#728F9B"/>
+      <stop offset="1" stop-color="#E5FFFF"/>
+    </linearGradient>
+    <filter id="softShadow" x="60" y="50" width="480" height="620" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="18"/>
     </filter>
+    <filter id="mintGlow" x="100" y="50" width="400" height="600" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+    <filter id="smallGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+    <filter id="eyeShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+    <clipPath id="headClip">
+      <path d="M181 211C178 164 207 127 248 119C290 105 348 122 375 153C398 179 405 224 396 270L384 330C374 368 346 395 302 401C256 398 220 375 205 341C192 309 183 261 181 211Z"/>
+    </clipPath>
   </defs>
 
-  <!-- Ambient Jetpack / Energy Rings Behind Body -->
-  <g filter="url(#neonGlow)">
-    <circle cx="200" cy="270" r="65" fill="none" stroke="url(#accentGrad)" stroke-width="4" opacity="0.6"/>
-    <ellipse cx="200" cy="340" rx="40" ry="12" fill="#00f2fe" opacity="0.4" filter="url(#neonGlow)"/>
+  <!-- Ambient halo -->
+  <ellipse cx="300" cy="585" rx="185" ry="34" fill="#8FFFEF" fill-opacity=".14" filter="url(#softShadow)"/>
+  <ellipse cx="300" cy="320" rx="175" ry="215" fill="#73E8DB" fill-opacity=".12" filter="url(#mintGlow)"/>
+
+  <!-- Floating glass bubbles -->
+  <g id="floating-bubbles" stroke="#E6FFFC" stroke-width="2">
+    <circle cx="131" cy="221" r="19" fill="url(#bubbleGlass)" fill-opacity=".8"/>
+    <path d="M121 211Q126 205 133 207" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+    <circle cx="460" cy="288" r="13" fill="url(#bubbleGlass)" fill-opacity=".72"/>
+    <path d="M454 281Q458 277 463 280" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="414" cy="125" r="8" fill="url(#bubbleGlass)"/>
+    <circle cx="165" cy="382" r="8" fill="url(#bubbleGlass)"/>
+    <circle cx="434" cy="412" r="6" fill="url(#bubbleGlass)"/>
+    <circle cx="206" cy="92" r="6" fill="url(#bubbleGlass)"/>
   </g>
 
-  <!-- Main Levitating Floating Platform Capsule Base -->
-  <path d="M 120 320 Q 200 360 280 320 Q 200 330 120 320 Z" fill="url(#accentGrad)" opacity="0.7"/>
-
-  <!-- Left Secondary Support Arm -->
-  <path d="M 100 210 Q 70 230 90 260" fill="none" stroke="url(#bodyGrad)" stroke-width="24" stroke-linecap="round"/>
-
-  <!-- Waving Interactive Right Arm (Targeted by JS Animation Matrix) -->
-  <g id="mascotWavingArm">
-    <path d="M 300 210 Q 340 200 350 160" fill="none" stroke="url(#bodyGrad)" stroke-width="24" stroke-linecap="round"/>
-    <circle cx="350" cy="155" r="14" fill="url(#accentGrad)"/>
+  <!-- Hair silhouette behind the head -->
+  <g id="hair-back">
+    <path d="M172 233C149 189 170 137 203 113C225 82 267 72 294 87C326 67 370 91 388 119C425 141 439 184 421 222L405 276L376 248L211 268L187 292Z"
+      fill="url(#hairGlass)" stroke="#E9FFFC" stroke-width="4"/>
+    <path d="M181 185C193 145 225 116 260 114C288 104 317 112 336 128"
+      stroke="#FFFFFF" stroke-opacity=".84" stroke-width="8" stroke-linecap="round"/>
+    <path d="M335 112C369 118 396 145 402 178"
+      stroke="#B8FFF3" stroke-opacity=".9" stroke-width="6" stroke-linecap="round"/>
+    <path d="M184 217C169 247 181 282 202 294"
+      stroke="#FFFFFF" stroke-opacity=".7" stroke-width="5" stroke-linecap="round"/>
+    <path d="M395 212C410 238 399 267 383 284"
+      stroke="#C7F9FF" stroke-opacity=".84" stroke-width="5" stroke-linecap="round"/>
   </g>
 
-  <!-- Central Translucent Engineered Glass Torso -->
-  <rect x="110" y="160" width="180" height="130" rx="60" fill="url(#bodyGrad)" stroke="rgba(255,255,255,0.2)" stroke-width="2" />
-  <!-- Core Internal Energy Light Node -->
-  <circle cx="200" cy="220" r="22" fill="url(#visorGrad)" opacity="0.8" filter="url(#neonGlow)"/>
+  <!-- Neck -->
+  <path d="M264 362L264 415C274 438 324 438 337 414L335 358Z"
+    fill="url(#glassBody)" stroke="#DFFFF9" stroke-opacity=".85" stroke-width="3"/>
 
-  <!-- Head Sphere Construction with Frosted Properties -->
-  <circle cx="200" cy="110" r="75" fill="url(#bodyGrad)" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
-
-  <!-- Cybernetic Hologram Visor (Face Layer) -->
-  <rect x="145" y="80" width="110" height="45" rx="20" fill="url(#visorGrad)" filter="url(#neonGlow)" opacity="0.95"/>
-
-  <!-- Dynamic Tracker Pupils (Targeted by JS Mouse Position Vector Offset) -->
-  <g fill="#05050d">
-    <!-- Left Eye Pupil Layer -->
-    <circle class="mascot-eye-pupil" cx="180" cy="102" r="7" style="transition: transform 0.1s ease-out;"/>
-    <!-- Right Eye Pupil Layer -->
-    <circle class="mascot-eye-pupil" cx="220" cy="102" r="7" style="transition: transform 0.1s ease-out;"/>
+  <!-- Body and shirt -->
+  <g id="body">
+    <path d="M245 400C219 402 191 417 178 443C160 475 158 516 171 551C185 580 225 597 300 599C375 597 415 580 429 551C442 516 440 475 422 443C409 417 381 402 355 400L331 419C314 435 286 435 269 419Z"
+      fill="url(#shirtGlass)" stroke="#EDFFFC" stroke-width="4"/>
+    <path d="M245 402L279 430L300 454L322 430L355 402"
+      fill="#F5FFFC" fill-opacity=".68" stroke="#FFFFFF" stroke-opacity=".95" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M280 431L300 454L320 431L311 468L300 480L289 468Z"
+      fill="url(#tieGlass)" stroke="#DFFFF8" stroke-width="2"/>
+    <path d="M300 480L289 468L283 520L300 532L317 520L311 468Z"
+      fill="url(#tieGlass)" stroke="#DFFFF8" stroke-width="2"/>
+    <path d="M194 457C186 489 190 529 204 549"
+      stroke="#FFFFFF" stroke-opacity=".8" stroke-width="5" stroke-linecap="round"/>
+    <path d="M407 456C419 487 414 527 400 548"
+      stroke="#FFFFFF" stroke-opacity=".66" stroke-width="5" stroke-linecap="round"/>
+    <path d="M233 566Q300 585 367 566"
+      stroke="#FFFFFF" stroke-opacity=".46" stroke-width="3" stroke-linecap="round"/>
   </g>
 
-  <!-- Antenna Nodes for Deep Network Matrix Synchronization -->
-  <line x1="200" y1="35" x2="200" y2="0" stroke="url(#accentGrad)" stroke-width="5" filter="url(#neonGlow)"/>
-  <circle cx="200" cy="0" r="8" fill="#ffffff" filter="url(#neonGlow)"/>
+  <!-- Arms -->
+  <g id="arms">
+    <path d="M190 441C168 457 155 482 164 504C171 522 194 523 211 509L246 473L228 451Z"
+      fill="url(#glassBody)" stroke="#E6FFFC" stroke-width="3"/>
+    <path d="M410 441C432 457 445 482 436 504C429 522 406 523 389 509L354 473L372 451Z"
+      fill="url(#glassBody)" stroke="#E6FFFC" stroke-width="3"/>
+    <path d="M175 481Q179 495 194 498" stroke="#FFFFFF" stroke-opacity=".75" stroke-width="4" stroke-linecap="round"/>
+    <path d="M425 481Q421 495 406 498" stroke="#FFFFFF" stroke-opacity=".75" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- Legs, sitting cross-legged -->
+  <g id="legs">
+    <path d="M214 556C194 566 176 587 187 607C201 632 253 634 285 616L311 600L287 568Z"
+      fill="url(#glassBody)" stroke="#E7FFFC" stroke-width="3"/>
+    <path d="M386 556C406 566 424 587 413 607C399 632 347 634 315 616L289 600L313 568Z"
+      fill="url(#glassBody)" stroke="#E7FFFC" stroke-width="3"/>
+    <path d="M208 591C231 603 255 602 275 590"
+      stroke="#FFFFFF" stroke-opacity=".68" stroke-width="4" stroke-linecap="round"/>
+    <path d="M392 591C369 603 345 602 325 590"
+      stroke="#FFFFFF" stroke-opacity=".68" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- Shoes -->
+  <g id="shoes">
+    <path d="M186 602C203 595 225 599 245 609C256 615 263 624 254 631C239 641 207 638 188 629C178 624 178 610 186 602Z"
+      fill="url(#shoeGlass)" stroke="#B8FFF5" stroke-width="3"/>
+    <path d="M414 602C397 595 375 599 355 609C344 615 337 624 346 631C361 641 393 638 412 629C422 624 422 610 414 602Z"
+      fill="url(#shoeGlass)" stroke="#B8FFF5" stroke-width="3"/>
+    <path d="M193 617Q218 628 244 622" stroke="#E8FFFC" stroke-opacity=".8" stroke-width="3" stroke-linecap="round"/>
+    <path d="M407 617Q382 628 356 622" stroke="#E8FFFC" stroke-opacity=".8" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Head glass shell -->
+  <g id="head">
+    <path d="M181 211C178 164 207 127 248 119C290 105 348 122 375 153C398 179 405 224 396 270L384 330C374 368 346 395 302 401C256 398 220 375 205 341C192 309 183 261 181 211Z"
+      fill="url(#faceGlass)" stroke="#F2FFFD" stroke-width="4"/>
+    <path d="M195 194C205 155 237 132 268 130"
+      stroke="#FFFFFF" stroke-opacity=".9" stroke-width="8" stroke-linecap="round"/>
+    <path d="M362 151C387 173 394 206 388 234"
+      stroke="#FFFFFF" stroke-opacity=".62" stroke-width="5" stroke-linecap="round"/>
+    <path d="M213 324C227 359 252 380 285 386"
+      stroke="#FFFFFF" stroke-opacity=".62" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="236" cy="235" rx="27" ry="54" fill="#FFFFFF" fill-opacity=".08"/>
+    <ellipse cx="363" cy="269" rx="20" ry="52" fill="#A3F5EA" fill-opacity=".12"/>
+  </g>
+
+  <!-- Front wavy glass hair -->
+  <g id="hair-front">
+    <path d="M178 221C163 188 177 152 205 132C225 108 249 107 271 119C295 97 328 111 342 130C365 124 389 145 392 170C410 187 404 215 389 234C378 214 365 201 347 196C329 190 315 173 311 155C294 185 270 196 245 195C222 194 203 208 196 235L190 264Z"
+      fill="url(#hairGlass)" stroke="#E9FFFC" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M191 190C199 160 224 139 249 139C270 137 281 151 279 170C276 187 257 199 238 199"
+      stroke="#FFFFFF" stroke-opacity=".94" stroke-width="8" stroke-linecap="round"/>
+    <path d="M279 130C296 120 316 128 322 147C328 164 318 184 302 192"
+      stroke="#FFFFFF" stroke-opacity=".83" stroke-width="7" stroke-linecap="round"/>
+    <path d="M329 140C351 143 369 161 370 181C371 196 362 209 351 216"
+      stroke="#BFFFF4" stroke-opacity=".95" stroke-width="6" stroke-linecap="round"/>
+    <path d="M204 216C215 197 232 188 250 187"
+      stroke="#9FEADD" stroke-opacity=".9" stroke-width="5" stroke-linecap="round"/>
+    <path d="M186 225C180 245 188 263 202 271"
+      stroke="#FFFFFF" stroke-opacity=".76" stroke-width="5" stroke-linecap="round"/>
+    <path d="M386 213C391 229 386 245 376 256"
+      stroke="#FFFFFF" stroke-opacity=".72" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="223" cy="155" r="5" fill="#FFFFFF"/>
+    <circle cx="341" cy="153" r="4" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Face details -->
+  <g id="face">
+    <!-- Soft cheek glass tint -->
+    <ellipse cx="230" cy="288" rx="35" ry="25" fill="url(#cheekGlow)"/>
+    <ellipse cx="369" cy="288" rx="35" ry="25" fill="url(#cheekGlow)"/>
+
+    <!-- Eyebrows -->
+    <path d="M229 246Q246 236 261 245" stroke="#28545A" stroke-opacity=".78" stroke-width="4" stroke-linecap="round"/>
+    <path d="M337 245Q352 236 369 246" stroke="#28545A" stroke-opacity=".78" stroke-width="4" stroke-linecap="round"/>
+
+    <!-- Expressive dark oval eyes -->
+    <g id="eyes">
+      <ellipse cx="246" cy="267" rx="12" ry="17" fill="#12343C"/>
+      <ellipse cx="352" cy="267" rx="12" ry="17" fill="#12343C"/>
+      <ellipse cx="250" cy="261" rx="4" ry="6" fill="#FFFFFF"/>
+      <ellipse cx="356" cy="261" rx="4" ry="6" fill="#FFFFFF"/>
+      <circle cx="240" cy="273" r="2.5" fill="#9DFFF1"/>
+      <circle cx="346" cy="273" r="2.5" fill="#9DFFF1"/>
+    </g>
+
+    <!-- Small smiling mouth -->
+    <g id="mouth">
+      <path d="M281 302Q300 319 319 302" stroke="#24575B" stroke-width="4" stroke-linecap="round"/>
+      <path d="M286 303Q300 311 314 303" stroke="#FFFFFF" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
+    </g>
+
+    <!-- Blush highlights -->
+    <g id="blush" fill="#FF9BBE" fill-opacity=".78">
+      <ellipse cx="230" cy="288" rx="13" ry="5"/>
+      <ellipse cx="369" cy="288" rx="13" ry="5"/>
+    </g>
+
+    <!-- Tiny glass freckles -->
+    <g fill="#FFFFFF" fill-opacity=".9">
+      <circle cx="218" cy="277" r="2"/>
+      <circle cx="226" cy="281" r="1.5"/>
+      <circle cx="379" cy="277" r="2"/>
+      <circle cx="371" cy="281" r="1.5"/>
+    </g>
+  </g>
+
+  <!-- Glass desk -->
+  <g id="desk">
+    <path d="M119 510L481 510L449 535L151 535Z"
+      fill="url(#glassBody)" fill-opacity=".66" stroke="#E9FFFC" stroke-width="3"/>
+    <path d="M151 535L449 535L434 553L166 553Z"
+      fill="#8BE6DD" fill-opacity=".16" stroke="#CFFFF9" stroke-opacity=".75" stroke-width="2"/>
+    <path d="M143 514L457 514" stroke="#FFFFFF" stroke-opacity=".88" stroke-width="3" stroke-linecap="round"/>
+    <path d="M181 553L174 582M419 553L426 582"
+      stroke="#B9FFF4" stroke-opacity=".65" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- Laptop -->
+  <g id="laptop">
+    <path d="M240 423C240 416 246 410 253 410H348C355 410 361 416 361 423V489H240Z"
+      fill="url(#laptopMetal)" stroke="#F3FFFF" stroke-width="3"/>
+    <path d="M250 423H351V480H250Z" fill="#15313E" stroke="#A9F7F0" stroke-width="2"/>
+    <rect x="258" y="431" width="85" height="41" rx="4" fill="#214A58"/>
+    <path d="M269 442H312M269 450H329M269 458H305"
+      stroke="#9CFFF0" stroke-width="3" stroke-linecap="round"/>
+    <path d="M232 489H369L387 501C390 504 387 508 382 508H218C213 508 210 504 213 501Z"
+      fill="url(#laptopMetal)" stroke="#F1FFFF" stroke-width="3"/>
+    <path d="M273 497H328" stroke="#567984" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="300" cy="418" r="2" fill="#244B57"/>
+  </g>
+
+  <!-- Floating coding speech bubble -->
+  <g id="coding-bubble">
+    <path d="M414 350C414 336 425 325 439 325H485C499 325 510 336 510 350V376C510 390 499 401 485 401H458L444 414V401H439C425 401 414 390 414 376Z"
+      fill="url(#bubbleGlass)" stroke="#D9FFFA" stroke-width="3"/>
+    <path d="M435 359L445 368L435 377M462 377L472 359"
+      stroke="#276A70" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M430 340Q438 334 446 337" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Floating glass light bulb -->
+  <g id="floating-light">
+    <circle cx="130" cy="365" r="42" fill="url(#orbGlow)" opacity=".85"/>
+    <path d="M113 361C105 347 111 329 126 325C141 321 153 333 151 347C150 356 143 360 140 369H122C120 365 117 363 113 361Z"
+      fill="url(#bubbleGlass)" stroke="#F4FFFD" stroke-width="3"/>
+    <path d="M122 370H140M123 377H139M126 383H136"
+      stroke="#C8FFF5" stroke-width="3" stroke-linecap="round"/>
+    <path d="M123 339Q128 332 136 335" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+    <path d="M131 311V303M104 326L98 320M158 326L164 320"
+      stroke="#B9FFF4" stroke-width="3" stroke-linecap="round"/>
+  </g>
+
+  <!-- Ambient sparkles -->
+  <g id="sparkles" fill="#F2FFFE">
+    <path d="M449 181L453 193L465 197L453 201L449 213L445 201L433 197L445 193Z" opacity=".85"/>
+    <path d="M153 286L156 294L164 297L156 300L153 308L150 300L142 297L150 294Z" opacity=".78"/>
+    <path d="M408 455L411 462L418 465L411 468L408 475L405 468L398 465L405 462Z" opacity=".8"/>
+    <circle cx="171" cy="175" r="3"/>
+    <circle cx="427" cy="245" r="3"/>
+    <circle cx="390" cy="102" r="3"/>
+    <circle cx="190" cy="426" r="2.5"/>
+    <circle cx="449" cy="318" r="2.5"/>
+  </g>
+
+  <!-- Foreground glass reflections -->
+  <path d="M176 459C188 432 205 419 226 413"
+    stroke="#FFFFFF" stroke-opacity=".45" stroke-width="3" stroke-linecap="round"/>
+  <path d="M371 413C394 421 411 438 421 460"
+    stroke="#FFFFFF" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>
+  <path d="M273 391Q299 402 327 390"
+    stroke="#FFFFFF" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
 </svg>
