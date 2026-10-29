@@ -1925,4 +1925,4 @@ html[data-reduced-motion="true"] #particle-layer { display: none; }
 @media print {
   #ambient-field, #hanging-light, #site-header, #scroll-progress, #settings-panel, #settings-backdrop { display: none !important; }
   body { background: #ffffff; color: #000000; }
-}.
+}
