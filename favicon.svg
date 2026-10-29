@@ -1,1 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Data Analyst Learning Portfolio icon: a glass character with a data point</title>
+  <defs>
+    <linearGradient id="fav-tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2a3770"/>
+      <stop offset="1" stop-color="#111936"/>
+    </linearGradient>
+    <radialGradient id="fav-face" cx="38%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".6" stop-color="#e6eeff"/>
+      <stop offset="1" stop-color="#b9cdff"/>
+    </radialGradient>
+    <linearGradient id="fav-hair" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d4e3ff"/>
+      <stop offset=".55" stop-color="#a9a6ff"/>
+      <stop offset="1" stop-color="#7fb0ff"/>
+    </linearGradient>
+  </defs>
 
+  <!-- dark glass tile keeps the icon readable on light and dark browser tabs -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#fav-tile)"/>
+  <rect x="2.75" y="2.75" width="58.5" height="58.5" rx="15.25" fill="none" stroke="#ffffff" stroke-opacity=".22" stroke-width="1.5"/>
+
+  <!-- pearl face -->
+  <ellipse cx="32" cy="36" rx="17" ry="15" fill="url(#fav-face)"/>
+
+  <!-- hair with swept bangs -->
+  <path d="M15 36 C12 16 23 10 32 10 C42 10 52 16 49 36 C46 28 41 24 37 20 C31 26 23 30 15 36 Z" fill="url(#fav-hair)"/>
+  <path d="M20 22 C23 17 28 15 33 15" fill="none" stroke="#ffffff" stroke-opacity=".65" stroke-width="2.2" stroke-linecap="round"/>
+
+  <!-- eyes and smile -->
+  <ellipse cx="25.5" cy="38.5" rx="2.8" ry="3.6" fill="#3f5fd0"/>
+  <ellipse cx="38.5" cy="38.5" rx="2.8" ry="3.6" fill="#3f5fd0"/>
+  <circle cx="26.3" cy="37.2" r="1" fill="#ffffff"/>
+  <circle cx="39.3" cy="37.2" r="1" fill="#ffffff"/>
+  <path d="M28.5 45 Q32 47.8 35.5 45" fill="none" stroke="#5a65b0" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- analytical accent: one data point -->
+  <circle cx="49" cy="17" r="5" fill="#ffffff"/>
+  <circle cx="49" cy="17" r="2.2" fill="#7fb0ff"/>
+</svg>
