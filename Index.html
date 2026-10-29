@@ -1,162 +1,384 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="ice-blue" data-light="on">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080b14">
-  <meta name="description" content="A Data Analyst portfolio showcasing analytics projects, SQL, Excel, Power BI and problem-solving skills.">
-  <title>YOUR NAME | Data Analyst Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- REPLACE: title, description, theme-color, favicon -->
+<title>Your Name | Data Analyst Learning Portfolio</title>
+<meta name="description" content="A learning portfolio of data analysis projects in Excel, SQL, Python and data visualization. [PLACEHOLDER: refine description]">
+<meta name="theme-color" content="#dbe9ff">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+<!--
+SELECTOR MAP for style.css / script.js
+Root: html[data-theme][data-light] | body#top
+Layers: #ambient-field > .ambient-light, .ambient-shape[data-depth], #particle-layer, #cursor-glow (all aria-hidden, pointer-events none)
+Chrome: #scroll-progress > #scroll-progress-bar | #site-header, #menu-toggle, #primary-nav | #light-toggle (aria-pressed) | #settings-toggle, #settings-panel, #settings-backdrop, #settings-close, #settings-form
+Mascot: #mascot-stage > #mascot-button > svg#mascot, parts: #mascot-hair-back, #mascot-hair-front, .hair-strand, #mascot-head, #mascot-face, #eye-left, #eye-right (.eye-lid, .eye-iris, .eye-shine), #brow-left, #brow-right, #mascot-nose, #mascot-mouth, .mascot-blush, #mascot-body | #mascot-bubble (status). State: data-mascot-state on #mascot-stage.
+Motion hooks: [data-reveal], .elastic-card, .elastic-surface, .magnetic-control, .expandable-panel, [data-parallax]; deform .elastic-surface only, never .elastic-content.
+Sections: #home #about #skills #tools #projects #case-studies #analytical-thinking #education #certifications #achievements #contact
+Placeholders: any element with [data-placeholder]
+-->
 </head>
-<body>
-  <div class="progress-bar" id="progressBar"></div>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="navbar">
-    <a href="#home" class="logo"><span class="logo-mark">A</span> YOUR<span class="accent">PORTFOLIO</span></a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
-    <nav id="navMenu">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact" class="nav-cta">Contact ↗</a>
-    </nav>
+<div id="ambient-field" aria-hidden="true">
+  <div class="ambient-light"></div>
+  <span class="ambient-shape" data-depth="1"></span>
+  <span class="ambient-shape" data-depth="2"></span>
+  <span class="ambient-shape" data-depth="3"></span>
+  <span class="ambient-shape" data-depth="2"></span>
+  <div id="particle-layer"></div>
+  <div id="cursor-glow"></div>
+</div>
+<div id="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+
+<header id="site-header" class="glass-panel">
+  <a class="brand" href="#home" aria-label="Your Name, back to top"><span class="brand-mark" aria-hidden="true"></span><span data-placeholder="name">Your Name</span></a>
+  <button id="menu-toggle" class="icon-button magnetic-control" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Menu"><span class="menu-bars" aria-hidden="true"></span></button>
+  <nav id="primary-nav" aria-label="Primary">
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#tools">Tools</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#case-studies">Case studies</a></li>
+      <li><a href="#analytical-thinking">Thinking</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <button id="settings-toggle" class="icon-button magnetic-control" type="button" aria-expanded="false" aria-controls="settings-panel"><span class="icon-gear" aria-hidden="true"></span><span class="sr-only">Customize appearance</span></button>
+</header>
+
+<div id="hanging-light">
+  <svg class="light-cord" viewBox="0 0 40 120" aria-hidden="true" focusable="false">
+    <path class="cord-line" d="M20 0 C 18 30, 22 60, 20 86"/>
+    <circle class="cord-knot" cx="20" cy="88" r="2.5"/>
+  </svg>
+  <button id="light-toggle" class="light-fixture magnetic-control" type="button" aria-pressed="true" aria-label="Ambient light">
+    <svg viewBox="0 0 64 80" aria-hidden="true" focusable="false">
+      <defs>
+        <radialGradient id="light-core" cx="50%" cy="55%" r="50%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#bcd8ff" stop-opacity=".4"/></radialGradient>
+        <linearGradient id="light-glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".85"/><stop offset="1" stop-color="#9cc4ff" stop-opacity=".3"/></linearGradient>
+      </defs>
+      <rect class="light-cap" x="26" y="0" width="12" height="10" rx="3"/>
+      <path class="light-body" d="M32 8 L50 30 L40 72 Q32 78 24 72 L14 30 Z" fill="url(#light-glass)"/>
+      <path class="light-facet" d="M32 8 L24 72 M32 8 L40 72 M14 30 H50"/>
+      <circle class="light-core" cx="32" cy="46" r="9" fill="url(#light-core)"/>
+    </svg>
+    <span class="light-glow" aria-hidden="true"></span>
+  </button>
+</div>
+
+<div id="settings-backdrop" hidden></div>
+<aside id="settings-panel" class="glass-panel drawer" aria-labelledby="settings-title" hidden>
+  <header class="drawer-head">
+    <h2 id="settings-title">Customize</h2>
+    <button id="settings-close" class="icon-button magnetic-control" type="button" aria-label="Close customization panel">&times;</button>
   </header>
-
-  <main>
-    <section class="hero section" id="home">
-      <div class="hero-copy reveal">
-        <div class="status"><span class="status-dot"></span> BUILDING MY ANALYTICS JOURNEY</div>
-        <p class="eyebrow">DATA ANALYST · PROBLEM SOLVER</p>
-        <h1>I turn raw data into <span class="gradient-text">meaningful insights.</span></h1>
-        <p class="hero-description">I am learning to transform complex data into clear stories, actionable insights, and smarter business decisions through analytics.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#projects">Explore Projects <span>↗</span></a>
-          <a class="btn btn-secondary" href="#contact">Let's Connect</a>
-        </div>
-        <div class="hero-meta">
-          <span><span class="meta-icon">⌘</span> SQL & Analytics</span>
-          <span><span class="meta-icon">▦</span> Data Visualization</span>
-        </div>
+  <p class="hint">Controls apply once script.js is loaded.</p>
+  <form id="settings-form" autocomplete="off">
+    <fieldset class="settings-group" id="group-theme">
+      <legend>Theme</legend>
+      <div class="preset-row">
+        <label class="preset"><input type="radio" name="preset" value="ice-blue" checked> Ice Blue</label>
+        <label class="preset"><input type="radio" name="preset" value="lavender-mist"> Lavender Mist</label>
+        <label class="preset"><input type="radio" name="preset" value="sage"> Sage</label>
+        <label class="preset"><input type="radio" name="preset" value="warm-pearl"> Warm Pearl</label>
       </div>
+      <label class="ctl">Accent colour <input type="color" id="set-accent" name="accent" value="#7fb0ff"></label>
+      <details class="settings-advanced">
+        <summary>Secondary overrides</summary>
+        <label class="ctl">Hair tint <input type="color" id="set-hair" name="hair" value="#a9c7ff"></label>
+        <label class="ctl">Ambient tint <input type="color" id="set-ambient-tint" name="ambientTint" value="#cfe2ff"></label>
+      </details>
+    </fieldset>
+    <fieldset class="settings-group" id="group-glass">
+      <legend>Glass</legend>
+      <label class="ctl">Blur <input type="range" id="set-blur" name="blur" min="0" max="40" value="22"><output for="set-blur">22px</output></label>
+      <label class="ctl">Opacity <input type="range" id="set-opacity" name="opacity" min="10" max="90" value="45"><output for="set-opacity">45%</output></label>
+      <label class="ctl">Border width <input type="range" id="set-border-width" name="borderWidth" min="0" max="4" step=".5" value="1"><output for="set-border-width">1px</output></label>
+      <label class="ctl">Border opacity <input type="range" id="set-border-opacity" name="borderOpacity" min="0" max="100" value="55"><output for="set-border-opacity">55%</output></label>
+      <label class="ctl">Corner radius <input type="range" id="set-radius" name="radius" min="0" max="40" value="22"><output for="set-radius">22px</output></label>
+      <label class="ctl">Shadow <input type="range" id="set-shadow" name="shadow" min="0" max="100" value="40"><output for="set-shadow">40%</output></label>
+    </fieldset>
+    <fieldset class="settings-group" id="group-ambient">
+      <legend>Environment</legend>
+      <label class="ctl">Shape count <input type="range" id="set-shape-count" name="shapeCount" min="0" max="4" value="4"><output for="set-shape-count">4</output></label>
+      <label class="ctl">Shape size <input type="range" id="set-shape-size" name="shapeSize" min="50" max="150" value="100"><output for="set-shape-size">100%</output></label>
+      <label class="ctl">Shape blur <input type="range" id="set-shape-blur" name="shapeBlur" min="0" max="60" value="12"><output for="set-shape-blur">12px</output></label>
+      <label class="ctl">Drift speed <input type="range" id="set-drift" name="drift" min="0" max="200" value="100"><output for="set-drift">100%</output></label>
+      <label class="ctl">Light intensity <input type="range" id="set-light" name="lightIntensity" min="0" max="100" value="60"><output for="set-light">60%</output></label>
+      <label class="ctl">Particles <input type="range" id="set-particles" name="particles" min="0" max="100" value="20"><output for="set-particles">20%</output></label>
+    </fieldset>
+    <fieldset class="settings-group" id="group-motion">
+      <legend>Motion</legend>
+      <label class="ctl">Animation speed <input type="range" id="set-speed" name="speed" min="25" max="200" value="100"><output for="set-speed">100%</output></label>
+      <label class="ctl">Motion intensity <input type="range" id="set-motion" name="motion" min="0" max="100" value="60"><output for="set-motion">60%</output></label>
+      <label class="ctl">Mascot movement <input type="range" id="set-mascot-motion" name="mascotMotion" min="0" max="100" value="60"><output for="set-mascot-motion">60%</output></label>
+      <label class="ctl check"><input type="checkbox" id="set-reduced-motion" name="reducedMotion"> Reduced motion</label>
+    </fieldset>
+    <div class="settings-actions">
+      <label class="ctl check"><input type="checkbox" id="set-remember" name="remember" checked> Remember my settings</label>
+      <button type="button" id="settings-save" class="button magnetic-control">Save</button>
+      <button type="reset" id="settings-reset" class="button button-quiet magnetic-control">Reset to defaults</button>
+    </div>
+  </form>
+</aside>
 
-      <div class="hero-visual reveal">
-        <div class="orb orb-one"></div>
-        <div class="orb orb-two"></div>
-        <div class="dashboard">
-          <div class="dash-top"><span>ANALYTICS OVERVIEW</span><span class="live-dot">● LIVE DESIGN</span></div>
-          <div class="dash-title">Data tells a story.</div>
-          <div class="metric-grid">
-            <div class="metric"><span>REVENUE</span><strong>$48.2K</strong><small>Demo metric</small></div>
-            <div class="metric"><span>ORDERS</span><strong>1,284</strong><small>Demo metric</small></div>
-          </div>
-          <div class="chart-card">
-            <div class="chart-heading"><span>Monthly performance</span><span>Sample data</span></div>
-            <div class="chart">
-              <div class="chart-grid"></div>
-              <svg viewBox="0 0 340 140" preserveAspectRatio="none" role="img" aria-label="Illustrative sample performance line chart">
-                <defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8b7cff" stop-opacity=".4"/><stop offset="100%" stop-color="#8b7cff" stop-opacity="0"/></linearGradient></defs>
-                <path d="M0 112 C25 104 28 77 55 89 S90 105 115 65 S155 80 180 52 S225 73 250 32 S290 52 340 10 L340 140 L0 140Z" fill="url(#chartFill)"/>
-                <path d="M0 112 C25 104 28 77 55 89 S90 105 115 65 S155 80 180 52 S225 73 250 32 S290 52 340 10" fill="none" stroke="#a89bff" stroke-width="3" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="chart-labels"><span>JAN</span><span>MAR</span><span>MAY</span><span>JUL</span><span>SEP</span><span>DEC</span></div>
-          </div>
-          <div class="dash-bottom"><span><i class="legend-dot purple"></i> Performance</span><span>Illustrative dashboard</span></div>
-        </div>
-        <div class="floating-tag tag-top">✳ Data-driven thinking</div>
-        <div class="floating-tag tag-bottom">⌘ Turning data into value</div>
+<main id="main">
+<section id="home" class="hero" data-section aria-labelledby="hero-title">
+  <div class="hero-copy">
+    <p class="hero-kicker" data-reveal="1">Data Analyst Learning Portfolio</p>
+    <h1 id="hero-title" data-reveal="2">Hi, I'm <span data-placeholder="name">[YOUR NAME]</span>. I turn messy data into clear questions and useful answers.</h1>
+    <p class="hero-lede" data-reveal="3" data-placeholder="tagline">[PLACEHOLDER: One or two sentences on what you are learning and the kind of problems you enjoy.]</p>
+    <p class="hero-actions" data-reveal="4">
+      <a class="button magnetic-control" href="#projects">View projects</a>
+      <a class="button button-quiet magnetic-control" href="#contact">Get in touch</a>
+    </p>
+  </div>
+  <div id="mascot-stage" class="hero-stage" data-mascot-state="idle" data-reveal="mascot">
+    <p id="mascot-bubble" class="mascot-bubble glass-panel" role="status" aria-live="polite" hidden></p>
+    <button id="mascot-button" class="mascot-target" type="button" aria-label="Say hello to the portfolio mascot">
+      <svg id="mascot" viewBox="0 0 240 290" role="img" aria-label="Translucent pearlescent mascot with layered blue-lavender hair" focusable="false">
+        <defs>
+          <radialGradient id="g-skin" cx="42%" cy="32%" r="75%"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".6" stop-color="#e8f0ff" stop-opacity=".7"/><stop offset="1" stop-color="#bcd0ff" stop-opacity=".55"/></radialGradient>
+          <linearGradient id="g-hair" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfe0ff"/><stop offset=".5" stop-color="#a9a6ff"/><stop offset="1" stop-color="#7fb0ff"/></linearGradient>
+          <linearGradient id="g-hair-deep" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8f9cff" stop-opacity=".9"/><stop offset="1" stop-color="#6f9bff" stop-opacity=".6"/></linearGradient>
+          <radialGradient id="g-iris" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#d9f0ff"/><stop offset=".55" stop-color="#6fa8ff"/><stop offset="1" stop-color="#3f5fd0"/></radialGradient>
+          <linearGradient id="g-body" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f8ff" stop-opacity=".85"/><stop offset="1" stop-color="#b8ccff" stop-opacity=".4"/></linearGradient>
+        </defs>
+        <g id="mascot-body-group">
+          <path id="mascot-body" d="M62 290 C62 232 92 214 120 214 C148 214 178 232 178 290 Z" fill="url(#g-body)"/>
+          <path class="mascot-rim" d="M70 290 C72 242 96 224 120 224" fill="none"/>
+        </g>
+        <g id="mascot-hair-back">
+          <path class="hair-mass" d="M32 130 C24 60 70 14 120 14 C170 14 216 60 208 130 C210 176 196 214 178 232 C186 188 176 150 120 150 C64 150 54 188 62 232 C44 214 30 176 32 130 Z" fill="url(#g-hair-deep)"/>
+          <path class="hair-strand" d="M40 120 C34 160 40 196 56 224"/>
+          <path class="hair-strand" d="M200 120 C206 160 200 196 184 224"/>
+        </g>
+        <g id="mascot-head">
+          <ellipse id="mascot-face" cx="120" cy="124" rx="68" ry="64" fill="url(#g-skin)"/>
+          <ellipse id="mascot-sheen" cx="94" cy="82" rx="26" ry="12" fill="#fff" opacity=".5" transform="rotate(-20 94 82)"/>
+          <g id="mascot-eyes">
+            <g id="eye-left" class="mascot-eye" transform="translate(88 128)">
+              <ellipse class="eye-white" rx="13" ry="15" fill="#fff"/>
+              <circle class="eye-iris" r="10" fill="url(#g-iris)"/>
+              <circle class="eye-pupil" r="4.5" fill="#1d2a5c"/>
+              <circle class="eye-shine" cx="-3" cy="-4" r="3" fill="#fff"/>
+              <circle class="eye-shine eye-shine-small" cx="3.5" cy="3.5" r="1.4" fill="#fff"/>
+              <path class="eye-lid" d="M-14 -2 Q0 -22 14 -2 L14 -16 L-14 -16 Z"/>
+            </g>
+            <g id="eye-right" class="mascot-eye" transform="translate(152 128)">
+              <ellipse class="eye-white" rx="13" ry="15" fill="#fff"/>
+              <circle class="eye-iris" r="10" fill="url(#g-iris)"/>
+              <circle class="eye-pupil" r="4.5" fill="#1d2a5c"/>
+              <circle class="eye-shine" cx="-3" cy="-4" r="3" fill="#fff"/>
+              <circle class="eye-shine eye-shine-small" cx="3.5" cy="3.5" r="1.4" fill="#fff"/>
+              <path class="eye-lid" d="M-14 -2 Q0 -22 14 -2 L14 -16 L-14 -16 Z"/>
+            </g>
+          </g>
+          <path id="brow-left" class="mascot-brow" d="M74 104 Q88 98 102 103"/>
+          <path id="brow-right" class="mascot-brow" d="M138 103 Q152 98 166 104"/>
+          <path id="mascot-nose" d="M118 146 Q120 149 122 146" fill="none"/>
+          <path id="mascot-mouth" d="M106 160 Q120 172 134 160" fill="none"/>
+          <ellipse class="mascot-blush" cx="70" cy="152" rx="11" ry="6"/>
+          <ellipse class="mascot-blush" cx="170" cy="152" rx="11" ry="6"/>
+        </g>
+        <g id="mascot-hair-front">
+          <path class="hair-mass" d="M48 118 C44 62 84 34 120 34 C156 34 196 62 192 118 C176 96 156 78 138 66 C128 92 96 104 48 118 Z" fill="url(#g-hair)"/>
+          <path class="hair-strand" d="M120 36 C112 58 98 82 74 100"/>
+          <path class="hair-strand" d="M126 38 C128 60 122 82 108 98"/>
+          <path class="hair-strand" d="M136 40 C150 56 164 78 176 100"/>
+          <path class="hair-highlight" d="M70 66 C86 46 108 40 128 42"/>
+          <circle class="hair-clip" cx="168" cy="74" r="6"/>
+        </g>
+      </svg>
+    </button>
+    <span class="mascot-shadow" aria-hidden="true"></span>
+  </div>
+</section>
+
+<section id="about" class="section" data-section data-reveal="section" aria-labelledby="about-title">
+  <h2 id="about-title">About me</h2>
+  <div class="elastic-card">
+    <div class="elastic-surface" aria-hidden="true"></div>
+    <div class="elastic-content split">
+      <p data-placeholder="about-1">[PLACEHOLDER: Who you are and why you are learning data analysis.]</p>
+      <p data-placeholder="about-2">[PLACEHOLDER: What you are working on now and what kind of role or collaboration you want next.]</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="section" data-section data-reveal="section" aria-labelledby="skills-title">
+  <h2 id="skills-title">Skills and learning progress</h2>
+  <p class="section-note" data-placeholder="skills-note">[PLACEHOLDER: Set each level honestly; 0 means not yet assessed.]</p>
+  <ul class="skill-grid">
+    <li class="elastic-card skill-item"><div class="elastic-surface" aria-hidden="true"></div><div class="elastic-content"><h3>Excel</h3><p>Formulas, pivot tables, cleaning.</p><label>Progress <progress class="skill-meter" max="100" value="0" data-placeholder="level">0%</progress></label></div></li>
+    <li class="elastic-card skill-item"><div class="elastic-surface" aria-hidden="true"></div><div class="elastic-content"><h3>SQL</h3><p>Queries, joins, aggregation.</p><label>Progress <progress class="skill-meter" max="100" value="0" data-placeholder="level">0%</progress></label></div></li>
+    <li class="elastic-card skill-item"><div class="elastic-surface" aria-hidden="true"></div><div class="elastic-content"><h3>Python</h3><p>pandas, notebooks, EDA.</p><label>Progress <progress class="skill-meter" max="100" value="0" data-placeholder="level">0%</progress></label></div></li>
+    <li class="elastic-card skill-item"><div class="elastic-surface" aria-hidden="true"></div><div class="elastic-content"><h3>Statistics</h3><p>Descriptive stats, inference basics.</p><label>Progress <progress class="skill-meter" max="100" value="0" data-placeholder="level">0%</progress></label></div></li>
+    <li class="elastic-card skill-item"><div class="elastic-surface" aria-hidden="true"></div><div class="elastic-content"><h3>Data visualization</h3><p>Charts and dashboards that explain.</p><label>Progress <progress class="skill-meter" max="100" value="0" data-placeholder="level">0%</progress></label></div></li>
+    <li class="elastic-card skill-item"><div class="elastic-surface" aria-hidden="true"></div><div class="elastic-content"><h3>Business thinking</h3><p>Framing questions, recommending actions.</p><label>Progress <progress class="skill-meter" max="100" value="0" data-placeholder="level">0%</progress></label></div></li>
+  </ul>
+</section>
+
+<section id="tools" class="section" data-section data-reveal="section" aria-labelledby="tools-title">
+  <h2 id="tools-title">Tools and technologies</h2>
+  <ul class="tool-list" data-placeholder="tools">
+    <li class="elastic-surface">Microsoft Excel</li><li class="elastic-surface">SQL</li><li class="elastic-surface">Python</li><li class="elastic-surface">pandas</li><li class="elastic-surface">Jupyter</li><li class="elastic-surface">Power BI or Tableau</li><li class="elastic-surface">Git and GitHub</li>
+  </ul>
+</section>
+
+<section id="projects" class="section" data-section data-reveal="section" aria-labelledby="projects-title">
+  <h2 id="projects-title">Featured projects</h2>
+  <p class="section-note" data-placeholder="projects-note">[PLACEHOLDER: Replace each card as you finish a project. Remove cards you do not need.]</p>
+  <div class="project-grid">
+    <article class="elastic-card project-card" id="project-excel" data-project="excel" data-status="planned">
+      <div class="elastic-surface" aria-hidden="true"></div>
+      <div class="elastic-content">
+        <h3 class="project-title" data-placeholder="project-title">[Excel project: data cleaning and pivot analysis]</h3>
+        <p class="project-status">Status: planned</p>
+        <dl class="project-facts">
+          <dt>Problem</dt><dd data-placeholder="problem">[Business question]</dd>
+          <dt>Data source</dt><dd data-placeholder="dataset">[Dataset name and link]</dd>
+          <dt>Tools</dt><dd data-placeholder="tools">Excel</dd>
+          <dt>Process</dt><dd data-placeholder="process">[Cleaning and analysis steps]</dd>
+          <dt>Key findings</dt><dd data-placeholder="findings">[Add after analysis]</dd>
+          <dt>Recommendations</dt><dd data-placeholder="recommendations">[Add after analysis]</dd>
+        </dl>
+        <p class="project-links"><a class="button button-quiet magnetic-control" href="#case-study-1">Case study</a> <a class="button button-quiet magnetic-control" href="https://example.com/your-project" data-placeholder="project-url">Project link</a> <a class="button button-quiet magnetic-control" href="https://github.com/YOUR-USERNAME/YOUR-REPO" data-placeholder="github-url">GitHub</a></p>
       </div>
-    </section>
-
-    <section class="trust-strip">
-      <span>MY LEARNING TOOLKIT</span>
-      <div class="tool-list"><span>SQL</span><span>EXCEL</span><span>POWER BI</span><span>PYTHON</span><span>STATISTICS</span></div>
-    </section>
-
-    <section class="section about-section" id="about">
-      <div class="section-heading reveal"><p class="eyebrow">01 — ABOUT ME</p><h2>Curiosity meets <span class="gradient-text">analytics.</span></h2><p class="section-description">My goal is to solve real problems, not just create charts.</p></div>
-      <div class="about-grid">
-        <div class="about-card reveal"><div class="about-icon">⌘</div><h3>Analytical mindset</h3><p>Learning to ask the right questions, investigate patterns, and understand why numbers change.</p></div>
-        <div class="about-card reveal"><div class="about-icon">◈</div><h3>Practical learning</h3><p>Building hands-on projects to apply SQL, spreadsheets, statistics, and visualization.</p></div>
-        <div class="about-card reveal"><div class="about-icon">↗</div><h3>Business impact</h3><p>Working toward clear recommendations that help people make better decisions.</p></div>
+    </article>
+    <article class="elastic-card project-card" id="project-sql" data-project="sql" data-status="planned">
+      <div class="elastic-surface" aria-hidden="true"></div>
+      <div class="elastic-content">
+        <h3 class="project-title" data-placeholder="project-title">[SQL project: business analytics queries]</h3>
+        <p class="project-status">Status: planned</p>
+        <dl class="project-facts">
+          <dt>Problem</dt><dd data-placeholder="problem">[Business question]</dd>
+          <dt>Data source</dt><dd data-placeholder="dataset">[Dataset name and link]</dd>
+          <dt>Tools</dt><dd data-placeholder="tools">SQL</dd>
+          <dt>Process</dt><dd data-placeholder="process">[Query approach]</dd>
+          <dt>Key findings</dt><dd data-placeholder="findings">[Add after analysis]</dd>
+          <dt>Recommendations</dt><dd data-placeholder="recommendations">[Add after analysis]</dd>
+        </dl>
+        <p class="project-links"><a class="button button-quiet magnetic-control" href="#case-study-2">Case study</a> <a class="button button-quiet magnetic-control" href="https://example.com/your-project" data-placeholder="project-url">Project link</a> <a class="button button-quiet magnetic-control" href="https://github.com/YOUR-USERNAME/YOUR-REPO" data-placeholder="github-url">GitHub</a></p>
       </div>
-    </section>
-
-    <section class="section skills-section" id="skills">
-      <div class="section-heading reveal"><p class="eyebrow">02 — SKILLS & TOOLS</p><h2>My <span class="gradient-text">analytics toolkit.</span></h2><p class="section-description">A learning roadmap, with room to grow through real projects.</p></div>
-      <div class="skills-grid">
-        <article class="skill-card reveal"><div class="skill-head"><span class="skill-icon orange">▤</span><span class="skill-status">LEARNING</span></div><h3>Excel & Spreadsheets</h3><p>Data cleaning, formulas, pivot tables and reporting.</p><div class="skill-track"><span style="width:35%"></span></div></article>
-        <article class="skill-card reveal"><div class="skill-head"><span class="skill-icon blue">⌘</span><span class="skill-status">LEARNING</span></div><h3>SQL</h3><p>Filtering, joins, aggregations, subqueries and analysis.</p><div class="skill-track"><span style="width:40%"></span></div></article>
-        <article class="skill-card reveal"><div class="skill-head"><span class="skill-icon yellow">▥</span><span class="skill-status">ROADMAP</span></div><h3>Power BI</h3><p>Interactive dashboards, data models and DAX.</p><div class="skill-track"><span style="width:15%"></span></div></article>
-        <article class="skill-card reveal"><div class="skill-head"><span class="skill-icon green">∑</span><span class="skill-status">LEARNING</span></div><h3>Statistics</h3><p>Descriptive statistics, probability, testing and interpretation.</p><div class="skill-track"><span style="width:30%"></span></div></article>
-        <article class="skill-card reveal"><div class="skill-head"><span class="skill-icon pink">⌘</span><span class="skill-status">ROADMAP</span></div><h3>Python</h3><p>Data manipulation, pandas and exploratory analysis.</p><div class="skill-track"><span style="width:10%"></span></div></article>
-        <article class="skill-card reveal"><div class="skill-head"><span class="skill-icon purple">◉</span><span class="skill-status">PRACTICING</span></div><h3>Problem Solving</h3><p>KPI analysis, root causes, business questions and insights.</p><div class="skill-track"><span style="width:30%"></span></div></article>
+    </article>
+    <article class="elastic-card project-card" id="project-python-eda" data-project="python-eda" data-status="planned">
+      <div class="elastic-surface" aria-hidden="true"></div>
+      <div class="elastic-content">
+        <h3 class="project-title" data-placeholder="project-title">[Python project: exploratory data analysis and statistics]</h3>
+        <p class="project-status">Status: planned</p>
+        <dl class="project-facts">
+          <dt>Problem</dt><dd data-placeholder="problem">[Question to explore]</dd>
+          <dt>Data source</dt><dd data-placeholder="dataset">[Dataset name and link]</dd>
+          <dt>Tools</dt><dd data-placeholder="tools">Python, pandas</dd>
+          <dt>Process</dt><dd data-placeholder="process">[Cleaning, EDA, tests]</dd>
+          <dt>Key findings</dt><dd data-placeholder="findings">[Add after analysis]</dd>
+          <dt>Recommendations</dt><dd data-placeholder="recommendations">[Add after analysis]</dd>
+        </dl>
+        <p class="project-links"><a class="button button-quiet magnetic-control" href="https://example.com/your-project" data-placeholder="project-url">Project link</a> <a class="button button-quiet magnetic-control" href="https://github.com/YOUR-USERNAME/YOUR-REPO" data-placeholder="github-url">GitHub</a></p>
       </div>
-      <p class="note">Skill indicators are illustrative placeholders. Update them to reflect your actual abilities.</p>
-    </section>
-
-    <section class="section projects-section" id="projects">
-      <div class="section-heading reveal"><p class="eyebrow">03 — SELECTED WORK</p><h2>Projects with a <span class="gradient-text">purpose.</span></h2><p class="section-description">Demonstrations of the kinds of business problems I plan to solve.</p></div>
-      <div class="filters reveal" id="projectFilters">
-        <button class="filter-btn active" data-filter="all">All projects</button>
-        <button class="filter-btn" data-filter="sql">SQL</button>
-        <button class="filter-btn" data-filter="excel">Excel</button>
-        <button class="filter-btn" data-filter="bi">Power BI</button>
-        <button class="filter-btn" data-filter="stats">Statistics</button>
+    </article>
+    <article class="elastic-card project-card" id="project-visualization" data-project="visualization" data-status="planned">
+      <div class="elastic-surface" aria-hidden="true"></div>
+      <div class="elastic-content">
+        <h3 class="project-title" data-placeholder="project-title">[Visualization project: dashboard]</h3>
+        <p class="project-status">Status: planned</p>
+        <dl class="project-facts">
+          <dt>Problem</dt><dd data-placeholder="problem">[Decision the dashboard supports]</dd>
+          <dt>Data source</dt><dd data-placeholder="dataset">[Dataset name and link]</dd>
+          <dt>Tools</dt><dd data-placeholder="tools">[Power BI, Tableau or Python]</dd>
+          <dt>Process</dt><dd data-placeholder="process">[Design and build steps]</dd>
+          <dt>Key findings</dt><dd data-placeholder="findings">[Add after analysis]</dd>
+          <dt>Recommendations</dt><dd data-placeholder="recommendations">[Add after analysis]</dd>
+        </dl>
+        <p class="project-links"><a class="button button-quiet magnetic-control" href="https://example.com/your-project" data-placeholder="project-url">Project link</a> <a class="button button-quiet magnetic-control" href="https://github.com/YOUR-USERNAME/YOUR-REPO" data-placeholder="github-url">GitHub</a></p>
       </div>
-      <div class="projects-grid">
-        <article class="project-card reveal" data-category="sql">
-          <div class="project-art art-purple"><span class="art-label">SQL · DEMO CONCEPT</span><div class="code-art"><span>SELECT</span> product, <span>SUM</span>(sales)<br><span>FROM</span> orders<br><span>GROUP BY</span> product;</div><span class="art-number">01</span></div>
-          <div class="project-content"><div class="tag-row"><span>SQL</span><span>Business analysis</span></div><h3>Retail Sales Analysis</h3><p>Explore sales trends, top products and customer purchasing patterns using a sample dataset.</p><div class="project-footer"><span>Planned project</span><span>↗</span></div></div>
-        </article>
-        <article class="project-card reveal" data-category="excel">
-          <div class="project-art art-green"><span class="art-label">EXCEL · DEMO CONCEPT</span><div class="spreadsheet"><span>MONTH</span><span>SALES</span><span>PROFIT</span><b>Jan</b><b>12,400</b><b>3,200</b><b>Feb</b><b>15,800</b><b>4,100</b><b>Mar</b><b>18,200</b><b>5,000</b></div><span class="art-number">02</span></div>
-          <div class="project-content"><div class="tag-row"><span>Excel</span><span>Reporting</span></div><h3>Sales Performance Report</h3><p>Plan a spreadsheet report with cleaned data, pivot tables and business KPIs.</p><div class="project-footer"><span>Planned project</span><span>↗</span></div></div>
-        </article>
-        <article class="project-card reveal" data-category="bi">
-          <div class="project-art art-blue"><span class="art-label">POWER BI · DEMO CONCEPT</span><div class="mini-dashboard"><div><small>REVENUE</small><b>$82K</b></div><div><small>ORDERS</small><b>2.4K</b></div><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><span class="art-number">03</span></div>
-          <div class="project-content"><div class="tag-row"><span>Power BI</span><span>Visualization</span></div><h3>Executive KPI Dashboard</h3><p>Design a dashboard concept for revenue, orders, profitability and business trends.</p><div class="project-footer"><span>Planned project</span><span>↗</span></div></div>
-        </article>
-        <article class="project-card reveal" data-category="stats">
-          <div class="project-art art-orange"><span class="art-label">STATISTICS · DEMO CONCEPT</span><div class="stat-art"><div style="height:36%"></div><div style="height:55%"></div><div style="height:46%"></div><div style="height:76%"></div><div style="height:63%"></div><div style="height:91%"></div><div style="height:72%"></div></div><span class="art-number">04</span></div>
-          <div class="project-content"><div class="tag-row"><span>Statistics</span><span>Experiments</span></div><h3>Campaign Performance Study</h3><p>Explore conversion rates, compare groups and investigate whether observed changes matter.</p><div class="project-footer"><span>Planned project</span><span>↗</span></div></div>
-        </article>
-      </div>
-      <p class="note">These are portfolio concepts, not completed client work. Replace them with real projects, datasets, findings and GitHub links as you build them.</p>
-    </section>
+    </article>
+  </div>
+</section>
 
-    <section class="section process-section">
-      <div class="section-heading reveal"><p class="eyebrow">04 — MY APPROACH</p><h2>From question to <span class="gradient-text">insight.</span></h2></div>
-      <div class="process-grid reveal">
-        <div class="process-step"><span>01</span><h3>Ask</h3><p>Define the business problem.</p></div>
-        <div class="process-step"><span>02</span><h3>Prepare</h3><p>Collect, inspect and clean data.</p></div>
-        <div class="process-step"><span>03</span><h3>Analyze</h3><p>Find patterns and explain changes.</p></div>
-        <div class="process-step"><span>04</span><h3>Communicate</h3><p>Present evidence and recommendations.</p></div>
-      </div>
-    </section>
+<section id="case-studies" class="section" data-section data-reveal="section" aria-labelledby="case-title">
+  <h2 id="case-title">Detailed case studies</h2>
+  <details class="expandable-panel case-study" id="case-study-1" data-project="excel">
+    <summary>[Excel project: case study title]</summary>
+    <div class="expandable-body">
+      <h3>Context and question</h3><p data-placeholder="cs-context">[Why this analysis matters]</p>
+      <h3>Data and cleaning</h3><p data-placeholder="cs-data">[Source, issues found, fixes]</p>
+      <h3>Method</h3><p data-placeholder="cs-method">[Steps and reasoning]</p>
+      <h3>Findings and recommendations</h3><p data-placeholder="cs-findings">[Add after completing the project]</p>
+      <h3>Limits and next steps</h3><p data-placeholder="cs-limits">[What you would do differently]</p>
+    </div>
+  </details>
+  <details class="expandable-panel case-study" id="case-study-2" data-project="sql">
+    <summary>[SQL project: case study title]</summary>
+    <div class="expandable-body">
+      <h3>Context and question</h3><p data-placeholder="cs-context">[Why this analysis matters]</p>
+      <h3>Data and cleaning</h3><p data-placeholder="cs-data">[Source, issues found, fixes]</p>
+      <h3>Method</h3><p data-placeholder="cs-method">[Steps and reasoning]</p>
+      <h3>Findings and recommendations</h3><p data-placeholder="cs-findings">[Add after completing the project]</p>
+      <h3>Limits and next steps</h3><p data-placeholder="cs-limits">[What you would do differently]</p>
+    </div>
+  </details>
+</section>
 
-    <section class="section contact-section" id="contact">
-      <div class="contact-card reveal">
-        <p class="eyebrow">05 — GET IN TOUCH</p>
-        <h2>Let's turn questions into <span class="gradient-text">answers.</span></h2>
-        <p>Interested in analytics, collaboration or sharing knowledge? Connect with me online.</p>
-        <div class="contact-actions">
-          <a class="btn btn-primary" id="emailLink" href="mailto:YOUR_EMAIL@example.com">Email Me ↗</a>
-          <a class="btn btn-secondary" id="githubLink" href="https://github.com/YOUR_USERNAME" target="_blank" rel="noopener noreferrer">GitHub Profile ↗</a>
-          <a class="btn btn-secondary" id="linkedinLink" href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-        </div>
-        <p class="note">Replace the example email and profile links with your own before publishing.</p>
-      </div>
-    </section>
-  </main>
+<section id="analytical-thinking" class="section" data-section data-reveal="section" aria-labelledby="thinking-title">
+  <h2 id="thinking-title">Problem-solving and analytical thinking</h2>
+  <ol class="process-steps">
+    <li class="elastic-surface"><h3>Define the question</h3><p data-placeholder="step-1">[How you clarify the decision behind a request]</p></li>
+    <li class="elastic-surface"><h3>Inspect and clean the data</h3><p data-placeholder="step-2">[How you check quality and document fixes]</p></li>
+    <li class="elastic-surface"><h3>Explore and test</h3><p data-placeholder="step-3">[How you form and check hypotheses]</p></li>
+    <li class="elastic-surface"><h3>Communicate</h3><p data-placeholder="step-4">[How you turn results into a recommendation]</p></li>
+  </ol>
+</section>
 
-  <footer class="footer"><a href="#home" class="logo"><span class="logo-mark">A</span> YOUR<span class="accent">PORTFOLIO</span></a><p>Designed with curiosity. Built for continuous learning.</p><a href="#home" class="back-top">Back to top ↑</a></footer>
+<section id="education" class="section" data-section data-reveal="section" aria-labelledby="education-title">
+  <h2 id="education-title">Education</h2>
+  <ul class="timeline">
+    <li class="elastic-surface" data-placeholder="education"><h3>[Institution or course]</h3><p>[Programme, dates, status. Add only what is true.]</p></li>
+  </ul>
+</section>
 
-  <script src="script.js"></script>
+<section id="certifications" class="section" data-section data-reveal="section" aria-labelledby="cert-title">
+  <h2 id="cert-title">Certifications</h2>
+  <ul class="timeline">
+    <li class="elastic-surface" data-placeholder="certification"><h3>[Certificate name]</h3><p>[Issuer, date, credential link. Remove this section if none yet.]</p></li>
+  </ul>
+</section>
+
+<section id="achievements" class="section" data-section data-reveal="section" aria-labelledby="ach-title">
+  <h2 id="ach-title">Achievements and learning milestones</h2>
+  <ul class="timeline">
+    <li class="elastic-surface" data-placeholder="milestone"><h3>[Milestone]</h3><p>[For example: first SQL query set, first published notebook.]</p></li>
+  </ul>
+</section>
+
+<section id="contact" class="section" data-section data-reveal="section" aria-labelledby="contact-title">
+  <h2 id="contact-title">Contact</h2>
+  <div class="elastic-card">
+    <div class="elastic-surface" aria-hidden="true"></div>
+    <div class="elastic-content">
+      <p data-placeholder="contact-note">[PLACEHOLDER: Invite recruiters and collaborators to reach out.]</p>
+      <ul class="contact-links">
+        <li><a class="button magnetic-control" href="mailto:you@example.com" data-placeholder="email">Email</a></li>
+        <li><a class="button button-quiet magnetic-control" href="https://www.linkedin.com/in/your-profile" data-placeholder="linkedin">LinkedIn</a></li>
+        <li><a class="button button-quiet magnetic-control" href="https://github.com/YOUR-USERNAME" data-placeholder="github">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer id="site-footer">
+  <p>&copy; <span data-placeholder="year">2026</span> <span data-placeholder="name">Your Name</span>. A learning portfolio.</p>
+  <a href="#top">Back to top</a>
+</footer>
 </body>
 </html>
-
