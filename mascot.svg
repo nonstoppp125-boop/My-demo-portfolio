@@ -1,128 +1,60 @@
-<svg id="mascot" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 290" width="240" height="290" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="mascot-title mascot-desc" focusable="false">
-  <title id="mascot-title">Translucent pearlescent mascot with layered icy-blue and lavender hair</title>
-  <desc id="mascot-desc">A friendly glass-like character with big blue eyes, a soft smile, swept bangs, long layered hair, a sparkle hair clip and a small bar-chart badge.</desc>
-
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
   <defs>
-    <radialGradient id="g-skin" cx="42%" cy="32%" r="75%">
-      <stop offset="0" stop-color="#ffffff" stop-opacity=".95"/>
-      <stop offset=".6" stop-color="#e8f0ff" stop-opacity=".7"/>
-      <stop offset="1" stop-color="#bcd0ff" stop-opacity=".55"/>
+    <radialGradient id="body" cx=".35" cy=".3" r=".85">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".6"/>
+      <stop offset=".45" stop-color="#99ffff" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#112233" stop-opacity=".6"/>
     </radialGradient>
-    <linearGradient id="g-hair" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#cfe0ff" stop-opacity=".96"/>
-      <stop offset=".5" stop-color="#a9a6ff" stop-opacity=".92"/>
-      <stop offset="1" stop-color="#7fb0ff" stop-opacity=".9"/>
-    </linearGradient>
-    <linearGradient id="g-hair-deep" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#8f9cff" stop-opacity=".9"/>
-      <stop offset="1" stop-color="#6f9bff" stop-opacity=".6"/>
-    </linearGradient>
-    <linearGradient id="g-hair-sheen" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#ffffff" stop-opacity=".7"/>
-      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-    </linearGradient>
-    <radialGradient id="g-iris" cx="40%" cy="35%" r="70%">
-      <stop offset="0" stop-color="#d9f0ff"/>
-      <stop offset=".55" stop-color="#6fa8ff"/>
-      <stop offset="1" stop-color="#3f5fd0"/>
+    <radialGradient id="rim" cx=".5" cy=".5" r=".5">
+      <stop offset=".85" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity=".35"/>
     </radialGradient>
-    <linearGradient id="g-body" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#f4f8ff" stop-opacity=".85"/>
-      <stop offset="1" stop-color="#b8ccff" stop-opacity=".4"/>
-    </linearGradient>
-    <radialGradient id="g-glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#bcd0ff" stop-opacity=".38"/>
-      <stop offset="1" stop-color="#bcd0ff" stop-opacity="0"/>
-    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
   </defs>
 
-  <ellipse id="mascot-glow" cx="120" cy="150" rx="112" ry="128" fill="url(#g-glow)"/>
+  <style>
+    .eye { fill: var(--accent, #35d7ee); transform-box: fill-box; transform-origin: center; animation: blink 4s infinite; }
+    .mini { animation: bob 5s ease-in-out infinite alternate; }
+    .mini.b { animation-delay: -2s; }
+    @keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
+    @keyframes bob { to { transform: translateY(-8px); } }
+    @media (prefers-reduced-motion: reduce) { .eye, .mini { animation: none; } }
+  </style>
 
-  <g id="mascot-sparkles" class="mascot-accent" fill="#ffffff" opacity=".85">
-    <path d="M22 42 Q22 48 28 48 Q22 48 22 54 Q22 48 16 48 Q22 48 22 42 Z"/>
-    <path d="M219 170 Q219 175 224 175 Q219 175 219 180 Q219 175 214 175 Q219 175 219 170 Z"/>
-    <path d="M21 196 Q21 200 25 200 Q21 200 21 204 Q21 200 17 200 Q21 200 21 196 Z"/>
+  <!-- ground shadow -->
+  <ellipse cx="100" cy="190" rx="46" ry="6" fill="#000" opacity=".35" filter="url(#soft)"/>
+
+  <!-- body -->
+  <circle cx="100" cy="100" r="78" fill="url(#body)" stroke="#ffffff" stroke-opacity=".5" stroke-width="1.5"/>
+  <circle cx="100" cy="100" r="78" fill="url(#rim)"/>
+
+  <!-- highlights -->
+  <path d="M50 66a60 60 0 0 1 58-32" stroke="#fff" stroke-opacity=".8" stroke-width="5" stroke-linecap="round" fill="none"/>
+  <path d="M62 52a48 48 0 0 1 20-12" stroke="#fff" stroke-opacity=".5" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M140 150a62 62 0 0 0 22-40" stroke="#fff" stroke-opacity=".28" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+  <!-- eyes -->
+  <g id="eyes" filter="url(#glow)">
+    <rect class="eye" x="70" y="84" width="14" height="34" rx="7"/>
+    <rect class="eye" x="116" y="84" width="14" height="34" rx="7"/>
   </g>
 
-  <g id="mascot-body-group">
-    <path id="mascot-neck" d="M104 176 C104 196 102 208 98 218 C108 226 132 226 142 218 C138 208 136 196 136 176 Z" fill="url(#g-skin)"/>
-    <path d="M102 186 C110 199 130 199 138 186 C136 202 104 202 102 186 Z" fill="#8aa3ee" opacity=".18"/>
-    <path id="mascot-body" d="M62 290 C62 232 92 214 120 214 C148 214 178 232 178 290 Z" fill="url(#g-body)"/>
-    <path class="mascot-rim" d="M70 290 C72 242 96 224 120 224" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity=".7"/>
-    <path d="M100 222 C108 236 132 236 140 222" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" opacity=".6"/>
-    <g id="mascot-decor" class="mascot-accent">
-      <circle cx="153" cy="258" r="14" fill="#ffffff" fill-opacity=".35" stroke="#ffffff" stroke-opacity=".8" stroke-width="1.2"/>
-      <rect x="146" y="261" width="4.5" height="8" rx="2" fill="#6fa8ff"/>
-      <rect x="152" y="255" width="4.5" height="14" rx="2" fill="#8f9cff"/>
-      <rect x="158" y="250" width="4.5" height="19" rx="2" fill="#a9c7ff"/>
-    </g>
+  <!-- cheeks + smile -->
+  <ellipse cx="58" cy="124" rx="10" ry="6" fill="#ff7ab8" opacity=".28"/>
+  <ellipse cx="142" cy="124" rx="10" ry="6" fill="#ff7ab8" opacity=".28"/>
+  <path d="M90 128q10 8 20 0" stroke="var(--accent, #35d7ee)" stroke-width="3" stroke-linecap="round" fill="none" opacity=".8"/>
+
+  <!-- tiny floating bubbles -->
+  <g class="mini">
+    <circle cx="172" cy="42" r="9" fill="url(#body)" stroke="#fff" stroke-opacity=".5"/>
+    <circle cx="169" cy="39" r="2.5" fill="#fff" opacity=".8"/>
   </g>
-
-  <g id="mascot-hair-back">
-    <path class="hair-mass" fill="url(#g-hair-deep)" stroke="#ffffff" stroke-opacity=".5" stroke-width="1.4" stroke-linejoin="round" d="M30 132 C20 62 66 12 120 12 C174 12 220 62 210 132 C214 170 208 206 190 238 C186 226 182 214 176 206 C180 232 170 252 156 262 C158 240 150 218 144 200 C136 176 104 176 96 200 C90 218 82 240 84 262 C70 252 60 232 64 206 C58 214 54 226 50 238 C32 206 26 170 30 132 Z"/>
-    <path class="hair-mass" fill="url(#g-hair)" opacity=".55" stroke="none" d="M52 150 C44 190 52 224 70 246 C66 222 68 190 76 160 Z"/>
-    <path class="hair-mass" fill="url(#g-hair)" opacity=".55" stroke="none" d="M188 150 C196 190 188 224 170 246 C174 222 172 190 164 160 Z"/>
-    <path class="hair-strand" fill="none" stroke="#e4ecff" stroke-width="1.5" stroke-linecap="round" opacity=".75" d="M38 130 C32 168 38 204 54 232"/>
-    <path class="hair-strand" fill="none" stroke="#e4ecff" stroke-width="2.1" stroke-linecap="round" opacity=".75" d="M202 130 C208 168 202 204 186 232"/>
-    <path class="hair-strand" fill="none" stroke="#e4ecff" stroke-width="1.2" stroke-linecap="round" opacity=".6" d="M70 170 C66 200 70 230 80 250"/>
-    <path class="hair-strand" fill="none" stroke="#e4ecff" stroke-width="1.8" stroke-linecap="round" opacity=".75" d="M170 170 C174 200 170 230 160 250"/>
-  </g>
-
-  <g id="mascot-head">
-    <ellipse cx="120" cy="124" rx="69.5" ry="65.5" fill="none" stroke="#8aa3ee" stroke-opacity=".4" stroke-width="1.5"/>
-    <ellipse id="mascot-face" class="mascot-glass-surface" cx="120" cy="124" rx="68" ry="64" fill="url(#g-skin)" stroke="#ffffff" stroke-opacity=".75" stroke-width="1.5"/>
-
-    <g id="mascot-highlights">
-      <ellipse id="mascot-sheen" cx="94" cy="82" rx="26" ry="12" fill="#ffffff" opacity=".5" transform="rotate(-20 94 82)"/>
-      <ellipse cx="168" cy="108" rx="5" ry="2.4" fill="#ffffff" opacity=".4" transform="rotate(-30 168 108)"/>
-    </g>
-
-    <g id="mascot-eyes">
-      <g id="eye-left" class="mascot-eye mascot-eye-left" transform="translate(88 128)">
-        <ellipse class="eye-white" rx="13" ry="15" fill="#ffffff" stroke="#c9dcff" stroke-width=".8"/>
-        <circle class="eye-iris" r="10" fill="url(#g-iris)"/>
-        <circle class="eye-iris" r="9.2" fill="none" stroke="#3f5fd0" stroke-opacity=".3" stroke-width=".8"/>
-        <circle class="eye-pupil" r="4.5" fill="#1d2a5c"/>
-        <circle class="eye-shine" cx="-3" cy="-4" r="3" fill="#ffffff"/>
-        <circle class="eye-shine eye-shine-small" cx="3.5" cy="3.5" r="1.4" fill="#ffffff"/>
-        <path class="eye-lid" fill="#eaf1ff" opacity=".97" d="M-14 -2 Q0 -22 14 -2 L14 -16 L-14 -16 Z"/>
-        <path class="eye-lash" fill="none" stroke="#2b3a7a" stroke-width="2.4" stroke-linecap="round" d="M-13 -6 Q0 -17 13 -6 M-13 -6 L-17 -9"/>
-      </g>
-      <g id="eye-right" class="mascot-eye mascot-eye-right" transform="translate(152 128)">
-        <ellipse class="eye-white" rx="13" ry="15" fill="#ffffff" stroke="#c9dcff" stroke-width=".8"/>
-        <circle class="eye-iris" r="10" fill="url(#g-iris)"/>
-        <circle class="eye-iris" r="9.2" fill="none" stroke="#3f5fd0" stroke-opacity=".3" stroke-width=".8"/>
-        <circle class="eye-pupil" r="4.5" fill="#1d2a5c"/>
-        <circle class="eye-shine" cx="-3" cy="-4" r="3" fill="#ffffff"/>
-        <circle class="eye-shine eye-shine-small" cx="3.5" cy="3.5" r="1.4" fill="#ffffff"/>
-        <path class="eye-lid" fill="#eaf1ff" opacity=".97" d="M-14 -2 Q0 -22 14 -2 L14 -16 L-14 -16 Z"/>
-        <path class="eye-lash" fill="none" stroke="#2b3a7a" stroke-width="2.4" stroke-linecap="round" d="M-13 -6 Q0 -17 13 -6 M13 -6 L17 -9"/>
-      </g>
-    </g>
-
-    <path id="brow-left" class="mascot-brow" fill="none" stroke="#6f7dd0" stroke-width="3" stroke-linecap="round" opacity=".85" d="M74 104 Q88 98 102 103"/>
-    <path id="brow-right" class="mascot-brow" fill="none" stroke="#6f7dd0" stroke-width="3" stroke-linecap="round" opacity=".85" d="M138 103 Q152 98 166 104"/>
-    <path id="mascot-nose" fill="none" stroke="#c9dcff" stroke-width="2" stroke-linecap="round" d="M118 146 Q120 149 122 146"/>
-    <path id="mascot-mouth" fill="none" stroke="#5a65b0" stroke-width="3" stroke-linecap="round" d="M106 160 Q120 172 134 160"/>
-    <ellipse class="mascot-blush" cx="70" cy="152" rx="11" ry="6" fill="#ff9db8" opacity=".32"/>
-    <ellipse class="mascot-blush" cx="170" cy="152" rx="11" ry="6" fill="#ff9db8" opacity=".32"/>
-  </g>
-
-  <g id="mascot-hair-front">
-    <path class="hair-mass" fill="url(#g-hair)" stroke="#ffffff" stroke-opacity=".5" stroke-width="1.4" stroke-linejoin="round" d="M46 120 C38 62 80 28 120 28 C162 28 202 62 194 120 C186 106 172 96 156 90 C148 84 140 78 134 70 C120 82 94 86 46 96 C46 104 46 112 46 120 Z"/>
-    <path class="hair-mass" fill="url(#g-hair-deep)" stroke="#ffffff" stroke-opacity=".45" stroke-width="1.2" stroke-linejoin="round" d="M128 72 C122 90 118 104 110 112 C120 104 130 92 134 72 Z"/>
-    <path class="hair-mass" fill="url(#g-hair)" stroke="#ffffff" stroke-opacity=".5" stroke-width="1.2" stroke-linejoin="round" d="M48 112 C42 144 46 170 58 190 C62 168 62 140 70 116 Z"/>
-    <path class="hair-mass" fill="url(#g-hair)" stroke="#ffffff" stroke-opacity=".5" stroke-width="1.2" stroke-linejoin="round" d="M192 112 C198 144 194 170 182 190 C178 168 178 140 170 116 Z"/>
-    <path fill="url(#g-hair-sheen)" opacity=".7" d="M62 70 C74 46 100 36 124 36 C100 46 82 62 72 90 Z"/>
-    <path class="hair-strand" fill="none" stroke="#e4ecff" stroke-width="1.5" stroke-linecap="round" opacity=".75" d="M120 30 C108 52 92 72 66 88"/>
-    <path class="hair-strand" fill="none" stroke="#e4ecff" stroke-width="2.1" stroke-linecap="round" opacity=".75" d="M128 31 C140 52 168 76 188 100"/>
-    <path class="hair-strand" fill="none" stroke="#e4ecff" stroke-width="1.2" stroke-linecap="round" opacity=".6" d="M104 34 C94 50 76 66 56 76"/>
-    <path class="hair-strand" fill="none" stroke="#e4ecff" stroke-width="1.8" stroke-linecap="round" opacity=".75" d="M54 130 C52 150 54 168 58 182"/>
-    <path class="hair-strand" fill="none" stroke="#e4ecff" stroke-width="1.8" stroke-linecap="round" opacity=".75" d="M186 130 C188 150 186 168 182 182"/>
-    <path class="hair-highlight mascot-hair-highlight" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" opacity=".5" d="M70 66 C86 46 108 40 128 42"/>
-    <path class="hair-strand" fill="none" stroke="#cfe0ff" stroke-width="1.6" stroke-linecap="round" opacity=".85" d="M120 30 C118 12 128 4 138 8 C130 12 128 20 128 30"/>
-    <path class="hair-strand" fill="none" stroke="#cfe0ff" stroke-width="1.3" stroke-linecap="round" opacity=".7" d="M200 80 C214 76 220 88 214 98"/>
-    <path class="hair-strand" fill="none" stroke="#cfe0ff" stroke-width="1.3" stroke-linecap="round" opacity=".7" d="M40 84 C28 82 22 94 28 106"/>
-    <path class="hair-clip mascot-accent" fill="#c9dcff" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round" d="M170 50 L173 57 L180 60 L173 63 L170 70 L167 63 L160 60 L167 57 Z"/>
+  <g class="mini b">
+    <circle cx="28" cy="70" r="6" fill="url(#body)" stroke="#fff" stroke-opacity=".5"/>
+    <circle cx="26" cy="68" r="1.8" fill="#fff" opacity=".8"/>
   </g>
 </svg>
