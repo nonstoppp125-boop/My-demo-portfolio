@@ -1,236 +1,1004 @@
-/**
- * DYNAMIC GLASS WORKSPACE CORE CONTROLLER ENGINE
- * Orchestrates Particle systems, Multi-layered UI routes, 
- * Dynamic Color Swapping and tracked SVG transformations.
- */
+/* ============================================================
+   DATA ANALYST PORTFOLIO — script.js
+   Vanilla JavaScript | GitHub Pages | No build tools required
+   ============================================================ */
 
-document.addEventListener('DOMContentLoaded', () => {
+(() => {
+  "use strict";
 
-    // --- SECTION ROUTING MANAGER ---
-    const navItems = document.querySelectorAll('.nav-item');
-    const sections = document.querySelectorAll('.viewport-section');
-    const ctaTriggers = document.querySelectorAll('.call-to-action-trigger');
+  /* ----------------------------------------------------------
+     1. HELPERS
+     ---------------------------------------------------------- */
 
-    function switchViewport(targetId) {
-        sections.forEach(section => {
-            section.classList.remove('active');
-            if(section.getAttribute('id') === targetId) {
-                section.classList.add('active');
-            }
-        });
+  const $ = (selector, root = document) =>
+    root.querySelector(selector);
 
-        navItems.forEach(item => {
-            item.classList.remove('active');
-            if(item.getAttribute('href') === `#${targetId}`) {
-                item.classList.add('active');
-            }
-        });
+  const $$ = (selector, root = document) =>
+    [...root.querySelectorAll(selector)];
+
+  const clamp = (value, min, max) =>
+    Math.min(max, Math.max(min, value));
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+
+  const STORAGE_KEY = "glassPortfolioSettingsV1";
+
+  /* ----------------------------------------------------------
+     2. DEFAULT SETTINGS
+     ---------------------------------------------------------- */
+
+  const defaults = {
+    theme: "ice",
+    glassBlur: 18,
+    glassOpacity: 0.12,
+    borderOpacity: 0.24,
+    animationSpeed: 1,
+    ambientEffects: true,
+    characterMovement: true,
+    reducedMotion: false,
+    lampOn: true
+  };
+
+  const themes = {
+    ice: {
+      name: "Ice Blue",
+      accent: "#86e8ff",
+      accentRgb: "134, 232, 255",
+      secondary: "#7ba7ff",
+      glow: "rgba(91, 218, 255, 0.22)"
+    },
+    lavender: {
+      name: "Lavender Mist",
+      accent: "#c6a7ff",
+      accentRgb: "198, 167, 255",
+      secondary: "#91a8ff",
+      glow: "rgba(177, 135, 255, 0.22)"
+    },
+    sage: {
+      name: "Sage Glass",
+      accent: "#a9edc7",
+      accentRgb: "169, 237, 199",
+      secondary: "#7fd8d1",
+      glow: "rgba(105, 224, 179, 0.20)"
+    },
+    rose: {
+      name: "Rose Quartz",
+      accent: "#ffb6d3",
+      accentRgb: "255, 182, 211",
+      secondary: "#d9a5ff",
+      glow: "rgba(255, 142, 194, 0.20)"
+    },
+    amber: {
+      name: "Warm Pearl",
+      accent: "#ffd49a",
+      accentRgb: "255, 212, 154",
+      secondary: "#ffb99a",
+      glow: "rgba(255, 186, 104, 0.19)"
+    },
+    mono: {
+      name: "Silver Frost",
+      accent: "#e2e9f5",
+      accentRgb: "226, 233, 245",
+      secondary: "#aab9d0",
+      glow: "rgba(197, 213, 239, 0.16)"
     }
+  };
 
-    navItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            const id = item.getAttribute('href').slice(1);
-            switchViewport(id);
-        });
+  let settings = { ...defaults };
+  let lampOn = defaults.lampOn;
+  let pointerX = 0.5;
+  let pointerY = 0.35;
+  let animationFrame = 0;
+  let resizeTimer = null;
+  let toastTimer = null;
+
+  /* ----------------------------------------------------------
+     3. SAFE SETTINGS LOADING
+     ---------------------------------------------------------- */
+
+  function loadSettings() {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+
+      if (!saved) {
+        settings = { ...defaults };
+        return;
+      }
+
+      const parsed = JSON.parse(saved);
+
+      settings = {
+        ...defaults,
+        ...parsed
+      };
+
+      if (!themes[settings.theme]) {
+        settings.theme = defaults.theme;
+      }
+
+      settings.glassBlur = clamp(
+        Number(settings.glassBlur) || defaults.glassBlur,
+        0,
+        35
+      );
+
+      settings.glassOpacity = clamp(
+        Number(settings.glassOpacity) || defaults.glassOpacity,
+        0.04,
+        0.35
+      );
+
+      settings.borderOpacity = clamp(
+        Number(settings.borderOpacity) || defaults.borderOpacity,
+        0.05,
+        0.65
+      );
+
+      settings.animationSpeed = clamp(
+        Number(settings.animationSpeed) || defaults.animationSpeed,
+        0.2,
+        2
+      );
+
+      lampOn = Boolean(settings.lampOn);
+    } catch (error) {
+      settings = { ...defaults };
+      lampOn = defaults.lampOn;
+    }
+  }
+
+  function saveSettings() {
+    try {
+      settings.lampOn = lampOn;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    } catch (error) {
+      showToast("Settings apply for this visit only.");
+    }
+  }
+
+  /* ----------------------------------------------------------
+     4. THEME APPLICATION
+     ---------------------------------------------------------- */
+
+  function applyTheme(themeName) {
+    const theme = themes[themeName];
+
+    if (!theme) return;
+
+    settings.theme = themeName;
+
+    const root = document.documentElement;
+
+    root.style.setProperty("--accent", theme.accent);
+    root.style.setProperty("--accent-rgb", theme.accentRgb);
+    root.style.setProperty("--accent-secondary", theme.secondary);
+    root.style.setProperty("--accent-glow", theme.glow);
+
+    root.dataset.theme = themeName;
+
+    $$("[data-theme-choice]").forEach((button) => {
+      const active = button.dataset.themeChoice === themeName;
+
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
     });
 
-    ctaTriggers.forEach(trigger => {
-        trigger.addEventListener('click', (e) => {
-            e.preventDefault();
-            const id = trigger.getAttribute('href').slice(1);
-            switchViewport(id);
-        });
+    $$("[data-theme-name]").forEach((element) => {
+      element.textContent = theme.name;
     });
 
+    saveSettings();
+  }
 
-    // --- CHROMATIC COLOR ENGINE CONFIGURATION ---
-    const themeButtons = document.querySelectorAll('.theme-btn');
-    const blurSlider = document.getElementById('blurSlider');
-    const auraVal = document.getElementById('auraVal');
+  /* ----------------------------------------------------------
+     5. GLASS SETTINGS
+     ---------------------------------------------------------- */
 
-    themeButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            themeButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+  function applyGlassSettings() {
+    const root = document.documentElement;
 
-            const hue = btn.getAttribute('data-hue');
-            const sat = btn.getAttribute('data-sat');
-            const light = btn.getAttribute('data-light');
+    root.style.setProperty(
+      "--glass-blur",
+      `${settings.glassBlur}px`
+    );
 
-            document.documentElement.style.setProperty('--theme-hue', hue);
-            document.documentElement.style.setProperty('--theme-sat', sat);
-            document.documentElement.style.setProperty('--theme-light', light);
-            
-            // Re-render primary aura glow calculations programmatically
-            document.documentElement.style.setProperty('--primary-aura-glow', `rgba(${hue}, 85%, 60%, 0.4)`);
-        });
+    root.style.setProperty(
+      "--glass-opacity",
+      String(settings.glassOpacity)
+    );
+
+    root.style.setProperty(
+      "--glass-border-opacity",
+      String(settings.borderOpacity)
+    );
+
+    root.style.setProperty(
+      "--animation-speed",
+      String(
+        settings.reducedMotion || prefersReducedMotion.matches
+          ? 0
+          : settings.animationSpeed
+      )
+    );
+
+    document.body.classList.toggle(
+      "ambient-disabled",
+      !settings.ambientEffects
+    );
+
+    document.body.classList.toggle(
+      "character-motion-disabled",
+      !settings.characterMovement
+    );
+
+    document.body.classList.toggle(
+      "reduced-motion",
+      settings.reducedMotion || prefersReducedMotion.matches
+    );
+
+    updateControlValues();
+  }
+
+  function updateControlValues() {
+    const controls = {
+      "[data-setting='glassBlur']": settings.glassBlur,
+      "[data-setting='glassOpacity']": settings.glassOpacity,
+      "[data-setting='borderOpacity']": settings.borderOpacity,
+      "[data-setting='animationSpeed']": settings.animationSpeed
+    };
+
+    Object.entries(controls).forEach(([selector, value]) => {
+      const input = $(selector);
+
+      if (input) input.value = String(value);
     });
 
-    if (blurSlider) {
-        blurSlider.addEventListener('input', (e) => {
-            const val = e.target.value;
-            auraVal.textContent = `${val}px`;
-            document.documentElement.style.setProperty('--blur-factor', `${val}px`);
-        });
+    const ambient = $("[data-setting='ambientEffects']");
+    if (ambient) ambient.checked = settings.ambientEffects;
+
+    const character = $("[data-setting='characterMovement']");
+    if (character) character.checked = settings.characterMovement;
+
+    const reduced = $("[data-setting='reducedMotion']");
+    if (reduced) reduced.checked = settings.reducedMotion;
+  }
+
+  function bindRangeSetting(selector, settingName, min, max) {
+    const input = $(selector);
+    if (!input) return;
+
+    input.addEventListener("input", () => {
+      settings[settingName] = clamp(
+        Number(input.value),
+        min,
+        max
+      );
+
+      applyGlassSettings();
+      saveSettings();
+    });
+  }
+
+  /* ----------------------------------------------------------
+     6. SETTINGS PANEL
+     ---------------------------------------------------------- */
+
+  function setPanelOpen(panel, open) {
+    if (!panel) return;
+
+    panel.classList.toggle("is-open", open);
+    panel.setAttribute("aria-hidden", String(!open));
+
+    const trigger = $(`[aria-controls="${panel.id}"]`);
+
+    if (trigger) {
+      trigger.setAttribute("aria-expanded", String(open));
     }
 
+    if (open) {
+      const firstControl = $("button, input, select", panel);
 
-    // --- LIVE CANVAS PARTICLE FLUID SIMULATION ---
-    const canvas = document.getElementById('particleCanvas');
-    if (canvas) {
-        const ctx = canvas.getContext('2d');
-        let particlesArray = [];
-        let mouse = { x: null, y: null, radius: 160 };
+      if (firstControl) {
+        window.setTimeout(() => firstControl.focus(), 80);
+      }
+    }
+  }
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+  function toggleSettingsPanel() {
+    const panel = $("#settingsPanel, [data-settings-panel]");
 
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        window.addEventListener('mouseout', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
-
-        class Particle {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.size = Math.random() * 3 + 1;
-                this.baseX = this.x;
-                this.baseY = this.y;
-                this.density = (Math.random() * 40) + 10;
-                this.color = `hsla(${Math.random() * 40 + 260}, 80%, 65%, 0.15)`;
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.closePath();
-                ctx.fill();
-            }
-            update() {
-                // Fluid vector physics response equations
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.hypot(dx, dy);
-                let forceDirectionX = dx / distance;
-                let forceDirectionY = dy / distance;
-                let maxDistance = mouse.radius;
-                let force = (maxDistance - distance) / maxDistance;
-                let directionX = forceDirectionX * force * this.density;
-                let directionY = forceDirectionY * force * this.density;
-
-                if (distance < mouse.radius) {
-                    this.x -= directionX;
-                    this.y -= directionY;
-                } else {
-                    if (this.x !== this.baseX) {
-                        let dxBack = this.x - this.baseX;
-                        this.x -= dxBack / 15;
-                    }
-                    if (this.y !== this.baseY) {
-                        let dyBack = this.y - this.baseY;
-                        this.y -= dyBack / 15;
-                    }
-                }
-            }
-        }
-
-        function initParticles() {
-            particlesArray = [];
-            const quantity = Math.floor((canvas.width * canvas.height) / 9000);
-            for (let i = 0; i < quantity; i++) {
-                let x = Math.random() * canvas.width;
-                let y = Math.random() * canvas.height;
-                particlesArray.push(new Particle(x, y));
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].draw();
-                particlesArray[i].update();
-            }
-            requestAnimationFrame(animateParticles);
-        }
-        
-        initParticles();
-        animateParticles();
-        window.addEventListener('resize', initParticles);
+    if (!panel) {
+      showToast("Add the settings panel markup to index.html first.");
+      return;
     }
 
+    setPanelOpen(panel, !panel.classList.contains("is-open"));
+  }
 
-    // --- ADVANCED 3D MASCOT VECTOR CURSOR INTERACTION ENGINE ---
-    const mascotWrapper = document.getElementById('mascotWrapper');
-    const mascotObject = document.getElementById('interactiveMascot');
-
-    window.addEventListener('mousemove', (e) => {
-        if (!mascotWrapper) return;
-        
-        const cx = window.innerWidth / 2;
-        const cy = window.innerHeight / 2;
-        const dx = e.clientX - cx;
-        const dy = e.clientY - cy;
-
-        // Mathematical conversion to rotation degrees for perspective shifts
-        const rotX = (-dy / cy) * 18; 
-        const rotY = (dx / cx) * 22; 
-
-        mascotWrapper.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(20px)`;
-
-        // Access internal SVG layers from inside Object Document to update focus coordinates
-        if (mascotObject && mascotObject.contentDocument) {
-            const svgDoc = mascotObject.contentDocument;
-            const eyes = svgDoc.querySelectorAll('.mascot-eye-pupil');
-            
-            eyes.forEach(pupil => {
-                // Constrain eye offset movement within boundaries
-                const lookX = (dx / cx) * 5;
-                const lookY = (dy / cy) * 5;
-                pupil.style.transform = `translate(${lookX}px, ${lookY}px)`;
-            });
-        }
+  function bindSettingsPanel() {
+    $$("[data-settings-toggle], #settingsToggle").forEach((button) => {
+      button.addEventListener("click", toggleSettingsPanel);
     });
 
-    // Custom Interactive Mascot Action Trigger
-    const waveTrigger = document.getElementById('triggerMascotWave');
-    if(waveTrigger) {
-        waveTrigger.addEventListener('click', () => {
-            if (mascotObject && mascotObject.contentDocument) {
-                const svgDoc = mascotObject.contentDocument;
-                const arm = svgDoc.getElementById('mascotWavingArm');
-                if(arm) {
-                    arm.style.transformOrigin = 'center bottom';
-                    arm.animate([
-                        { transform: 'rotate(0deg)' },
-                        { transform: 'rotate(-25deg)' },
-                        { transform: 'rotate(15deg)' },
-                        { transform: 'rotate(-25deg)' },
-                        { transform: 'rotate(0deg)' }
-                    ], {
-                        duration: 800,
-                        iterations: 1
-                    });
-                }
-            }
-            // Temporal pulse animation on ambient orbs
-            const orb1 = document.getElementById('orb1');
-            if(orb1) {
-                orb1.style.transform = 'scale(1.4) translateY(-80px)';
-                setTimeout(() => {
-                    if(orb1) orb1.style.transform = 'none';
-                }, 1500);
-            }
-        });
+    $$("[data-settings-close]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const panel = button.closest(
+          "#settingsPanel, [data-settings-panel]"
+        );
+
+        setPanelOpen(panel, false);
+      });
+    });
+
+    $$("[data-theme-choice]").forEach((button) => {
+      button.addEventListener("click", () => {
+        applyTheme(button.dataset.themeChoice);
+      });
+    });
+
+    bindRangeSetting(
+      "[data-setting='glassBlur']",
+      "glassBlur",
+      0,
+      35
+    );
+
+    bindRangeSetting(
+      "[data-setting='glassOpacity']",
+      "glassOpacity",
+      0.04,
+      0.35
+    );
+
+    bindRangeSetting(
+      "[data-setting='borderOpacity']",
+      "borderOpacity",
+      0.05,
+      0.65
+    );
+
+    bindRangeSetting(
+      "[data-setting='animationSpeed']",
+      "animationSpeed",
+      0.2,
+      2
+    );
+
+    [
+      "ambientEffects",
+      "characterMovement",
+      "reducedMotion"
+    ].forEach((name) => {
+      const input = $(`[data-setting="${name}"]`);
+
+      if (!input) return;
+
+      input.addEventListener("change", () => {
+        settings[name] = input.checked;
+        applyGlassSettings();
+        saveSettings();
+      });
+    });
+
+    $$("[data-settings-reset]").forEach((button) => {
+      button.addEventListener("click", resetSettings);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+
+      const panel = $("#settingsPanel, [data-settings-panel]");
+
+      if (panel?.classList.contains("is-open")) {
+        setPanelOpen(panel, false);
+      }
+    });
+  }
+
+  function resetSettings() {
+    settings = { ...defaults };
+    lampOn = defaults.lampOn;
+
+    applyTheme(settings.theme);
+    applyGlassSettings();
+    applyLampState();
+    saveSettings();
+
+    showToast("Appearance settings reset.");
+  }
+
+  /* ----------------------------------------------------------
+     7. HANGING GLASS LAMP
+     Click the rope/control itself to toggle the lamp.
+     ---------------------------------------------------------- */
+
+  function applyLampState() {
+    document.body.classList.toggle("lamp-on", lampOn);
+    document.body.classList.toggle("lamp-off", !lampOn);
+
+    const lamp = $("[data-glass-lamp], #glassLamp");
+    const rope = $("[data-lamp-rope], #lampRope");
+
+    if (lamp) {
+      lamp.setAttribute("data-state", lampOn ? "on" : "off");
+      lamp.setAttribute("aria-label", lampOn ? "Lamp is on" : "Lamp is off");
     }
-});
+
+    if (rope) {
+      rope.setAttribute("aria-pressed", String(lampOn));
+      rope.setAttribute(
+        "aria-label",
+        lampOn ? "Turn hanging lamp off" : "Turn hanging lamp on"
+      );
+    }
+
+    $$("[data-lamp-status]").forEach((element) => {
+      element.textContent = lampOn ? "LIGHT ON" : "LIGHT OFF";
+    });
+
+    saveSettings();
+  }
+
+  function toggleLamp() {
+    lampOn = !lampOn;
+    applyLampState();
+
+    if (lampOn) {
+      showToast("The glass light is glowing.");
+      characterReact("happy");
+    } else {
+      showToast("Ambient light dimmed.");
+      characterReact("sleepy");
+    }
+  }
+
+  function bindLamp() {
+    const rope = $("[data-lamp-rope], #lampRope");
+
+    if (rope) {
+      rope.addEventListener("click", toggleLamp);
+
+      if (
+        rope.tagName !== "BUTTON" &&
+        rope.getAttribute("role") !== "button"
+      ) {
+        rope.setAttribute("role", "button");
+        rope.setAttribute("tabindex", "0");
+      }
+
+      rope.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggleLamp();
+        }
+      });
+    }
+
+    const lamp = $("[data-glass-lamp], #glassLamp");
+
+    if (lamp) {
+      lamp.addEventListener("click", (event) => {
+        if (event.target.closest("[data-lamp-rope], #lampRope")) {
+          return;
+        }
+
+        showToast("Tap the hanging rope to switch the light.");
+      });
+    }
+
+    applyLampState();
+  }
+
+  /* ----------------------------------------------------------
+     8. MASCOT INTERACTIONS
+     ---------------------------------------------------------- */
+
+  function getMascot() {
+    return $(
+      "[data-mascot], #mascot, .mascot-character, .mascot-wrap"
+    );
+  }
+
+  function characterReact(mood) {
+    const mascot = getMascot();
+    if (!mascot) return;
+
+    mascot.dataset.mood = mood;
+
+    mascot.classList.remove(
+      "mascot-react",
+      "mascot-happy",
+      "mascot-sleepy"
+    );
+
+    void mascot.offsetWidth;
+
+    mascot.classList.add("mascot-react");
+
+    if (mood === "happy") mascot.classList.add("mascot-happy");
+    if (mood === "sleepy") mascot.classList.add("mascot-sleepy");
+
+    window.setTimeout(() => {
+      mascot.classList.remove(
+        "mascot-react",
+        "mascot-happy",
+        "mascot-sleepy"
+      );
+
+      if (mascot.dataset.mood === mood) {
+        delete mascot.dataset.mood;
+      }
+    }, 1000);
+  }
+
+  function bindMascotInteractions() {
+    const mascot = getMascot();
+
+    if (!mascot) return;
+
+    mascot.addEventListener("click", () => {
+      const moods = ["happy", "curious", "excited"];
+      const nextMood = moods[Math.floor(Math.random() * moods.length)];
+
+      characterReact(nextMood);
+      showToast("Your glass companion says hello!");
+    });
+
+    mascot.addEventListener("pointerenter", () => {
+      if (settings.characterMovement) {
+        mascot.classList.add("mascot-hover");
+      }
+    });
+
+    mascot.addEventListener("pointerleave", () => {
+      mascot.classList.remove("mascot-hover");
+    });
+  }
+
+  function bindPointerMovement() {
+    const isTouchOnly =
+      window.matchMedia("(hover: none)").matches;
+
+    if (isTouchOnly || prefersReducedMotion.matches) return;
+
+    document.addEventListener(
+      "pointermove",
+      (event) => {
+        pointerX = event.clientX / window.innerWidth;
+        pointerY = event.clientY / window.innerHeight;
+
+        document.documentElement.style.setProperty(
+          "--pointer-x",
+          `${pointerX * 100}%`
+        );
+
+        document.documentElement.style.setProperty(
+          "--pointer-y",
+          `${pointerY * 100}%`
+        );
+
+        if (!settings.characterMovement) return;
+
+        const mascot = getMascot();
+
+        if (!mascot) return;
+
+        const moveX = (pointerX - 0.5) * 12;
+        const moveY = (pointerY - 0.5) * 9;
+
+        mascot.style.setProperty("--mascot-pointer-x", `${moveX}px`);
+        mascot.style.setProperty("--mascot-pointer-y", `${moveY}px`);
+      },
+      { passive: true }
+    );
+  }
+
+  /* ----------------------------------------------------------
+     9. AMBIENT PARTICLES
+     ---------------------------------------------------------- */
+
+  function createAmbientParticles() {
+    const container = $(
+      "[data-ambient-particles], #ambientParticles"
+    );
+
+    if (!container || container.dataset.generated === "true") {
+      return;
+    }
+
+    container.dataset.generated = "true";
+
+    const fragment = document.createDocumentFragment();
+    const particleCount = window.innerWidth < 600 ? 10 : 20;
+
+    for (let i = 0; i < particleCount; i += 1) {
+      const particle = document.createElement("span");
+
+      particle.className = "ambient-particle";
+      particle.setAttribute("aria-hidden", "true");
+
+      particle.style.setProperty(
+        "--particle-x",
+        `${Math.random() * 100}%`
+      );
+
+      particle.style.setProperty(
+        "--particle-y",
+        `${Math.random() * 100}%`
+      );
+
+      particle.style.setProperty(
+        "--particle-size",
+        `${2 + Math.random() * 5}px`
+      );
+
+      particle.style.setProperty(
+        "--particle-delay",
+        `${Math.random() * -20}s`
+      );
+
+      particle.style.setProperty(
+        "--particle-duration",
+        `${12 + Math.random() * 18}s`
+      );
+
+      fragment.appendChild(particle);
+    }
+
+    container.appendChild(fragment);
+  }
+
+  /* ----------------------------------------------------------
+     10. MOBILE NAVIGATION
+     ---------------------------------------------------------- */
+
+  function bindMobileNavigation() {
+    const toggle = $(
+      "[data-menu-toggle], #menuToggle, .menu-toggle"
+    );
+
+    const menu = $(
+      "[data-navigation], #primaryNavigation, .primary-navigation"
+    );
+
+    if (!toggle || !menu) return;
+
+    toggle.addEventListener("click", () => {
+      const open = !menu.classList.contains("is-open");
+
+      menu.classList.toggle("is-open", open);
+      toggle.classList.toggle("is-active", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      menu.setAttribute("aria-hidden", String(!open));
+    });
+
+    $$("a", menu).forEach((link) => {
+      link.addEventListener("click", () => {
+        menu.classList.remove("is-open");
+        toggle.classList.remove("is-active");
+        toggle.setAttribute("aria-expanded", "false");
+        menu.setAttribute("aria-hidden", "true");
+      });
+    });
+  }
+
+  /* ----------------------------------------------------------
+     11. SCROLL PROGRESS + REVEAL ANIMATIONS
+     ---------------------------------------------------------- */
+
+  function updateScrollProgress() {
+    const progress = $(
+      "[data-scroll-progress], #scrollProgress"
+    );
+
+    if (!progress) return;
+
+    const scrollableHeight =
+      document.documentElement.scrollHeight - window.innerHeight;
+
+    const ratio =
+      scrollableHeight > 0
+        ? window.scrollY / scrollableHeight
+        : 0;
+
+    progress.style.transform = `scaleX(${clamp(ratio, 0, 1)})`;
+  }
+
+  function bindScrollProgress() {
+    let scheduled = false;
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (scheduled) return;
+
+        scheduled = true;
+
+        window.requestAnimationFrame(() => {
+          updateScrollProgress();
+          scheduled = false;
+        });
+      },
+      { passive: true }
+    );
+
+    updateScrollProgress();
+  }
+
+  function bindRevealAnimations() {
+    const elements = $$(
+      "[data-reveal], .reveal-on-scroll, .reveal"
+    );
+
+    if (!elements.length) return;
+
+    if (
+      !("IntersectionObserver" in window) ||
+      prefersReducedMotion.matches ||
+      settings.reducedMotion
+    ) {
+      elements.forEach((element) => {
+        element.classList.add("is-visible");
+      });
+
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries, currentObserver) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          entry.target.classList.add("is-visible");
+          currentObserver.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
+      }
+    );
+
+    elements.forEach((element) => observer.observe(element));
+  }
+
+  /* ----------------------------------------------------------
+     12. ACTIVE NAVIGATION LINK
+     ---------------------------------------------------------- */
+
+  function bindActiveNavigation() {
+    const sections = $$("main section[id], section[id]");
+
+    const links = $$(
+      'nav a[href^="#"], [data-navigation] a[href^="#"]'
+    );
+
+    if (!sections.length || !links.length) return;
+
+    if (!("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          links.forEach((link) => {
+            const active =
+              link.getAttribute("href") === `#${entry.target.id}`;
+
+            link.classList.toggle("is-active", active);
+
+            if (active) {
+              link.setAttribute("aria-current", "location");
+            } else {
+              link.removeAttribute("aria-current");
+            }
+          });
+        });
+      },
+      {
+        rootMargin: "-30% 0px -55% 0px",
+        threshold: 0
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+  }
+
+  /* ----------------------------------------------------------
+     13. TOAST NOTIFICATIONS
+     ---------------------------------------------------------- */
+
+  function showToast(message) {
+    let toast = $("[data-toast], #portfolioToast");
+
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "portfolioToast";
+      toast.dataset.toast = "";
+      toast.className = "portfolio-toast";
+      toast.setAttribute("role", "status");
+      toast.setAttribute("aria-live", "polite");
+      document.body.appendChild(toast);
+    }
+
+    toast.textContent = message;
+    toast.classList.add("is-visible");
+
+    window.clearTimeout(toastTimer);
+
+    toastTimer = window.setTimeout(() => {
+      toast.classList.remove("is-visible");
+    }, 2600);
+  }
+
+  /* ----------------------------------------------------------
+     14. BACK TO TOP
+     ---------------------------------------------------------- */
+
+  function bindBackToTop() {
+    $$("[data-back-to-top], #backToTop").forEach((button) => {
+      button.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior:
+            prefersReducedMotion.matches || settings.reducedMotion
+              ? "auto"
+              : "smooth"
+        });
+      });
+    });
+  }
+
+  /* ----------------------------------------------------------
+     15. CURRENT YEAR
+     ---------------------------------------------------------- */
+
+  function setCurrentYear() {
+    $$("[data-current-year], #currentYear").forEach((element) => {
+      element.textContent = String(new Date().getFullYear());
+    });
+  }
+
+  /* ----------------------------------------------------------
+     16. LOADING SCREEN
+     ---------------------------------------------------------- */
+
+  function hideLoader() {
+    const loader = $(
+      "[data-page-loader], #pageLoader, .page-loader"
+    );
+
+    if (!loader) return;
+
+    loader.classList.add("is-loaded");
+    loader.setAttribute("aria-hidden", "true");
+
+    window.setTimeout(() => {
+      loader.hidden = true;
+    }, 700);
+  }
+
+  /* ----------------------------------------------------------
+     17. OPTIONAL CONTACT FORM VALIDATION
+     Does not pretend to send messages without a backend.
+     ---------------------------------------------------------- */
+
+  function bindContactForm() {
+    const form = $("[data-contact-form], #contactForm");
+
+    if (!form) return;
+
+    form.addEventListener("submit", (event) => {
+      const action = form.getAttribute("action");
+
+      if (!action || action === "#") {
+        event.preventDefault();
+
+        showToast(
+          "Contact form needs a real form service or email link."
+        );
+      }
+    });
+  }
+
+  /* ----------------------------------------------------------
+     18. COPY EMAIL BUTTON
+     ---------------------------------------------------------- */
+
+  function bindCopyButtons() {
+    $$("[data-copy-text]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const value = button.dataset.copyText;
+
+        if (!value) return;
+
+        try {
+          await navigator.clipboard.writeText(value);
+          showToast("Copied to clipboard.");
+        } catch (error) {
+          showToast("Clipboard access is unavailable in this browser.");
+        }
+      });
+    });
+  }
+
+  /* ----------------------------------------------------------
+     19. ACCESSIBLE EXTERNAL LINKS
+     ---------------------------------------------------------- */
+
+  function secureExternalLinks() {
+    $$('a[target="_blank"]').forEach((link) => {
+      const current = link.getAttribute("rel") || "";
+
+      const values = new Set(current.split(/\s+/).filter(Boolean));
+
+      values.add("noopener");
+      values.add("noreferrer");
+
+      link.setAttribute("rel", [...values].join(" "));
+    });
+  }
+
+  /* ----------------------------------------------------------
+     20. BOOT
+     ---------------------------------------------------------- */
+
+  function init() {
+    loadSettings();
+
+    applyTheme(settings.theme);
+    applyGlassSettings();
+
+    bindSettingsPanel();
+    bindLamp();
+    bindMascotInteractions();
+    bindPointerMovement();
+    createAmbientParticles();
+    bindMobileNavigation();
+    bindScrollProgress();
+    bindRevealAnimations();
+    bindActiveNavigation();
+    bindBackToTop();
+    setCurrentYear();
+    bindContactForm();
+    bindCopyButtons();
+    secureExternalLinks();
+
+    if (document.readyState === "complete") {
+      hideLoader();
+    } else {
+      window.addEventListener("load", hideLoader, { once: true });
+    }
+
+    prefersReducedMotion.addEventListener?.("change", () => {
+      applyGlassSettings();
+    });
+
+    window.addEventListener("resize", () => {
+      window.clearTimeout(resizeTimer);
+
+      resizeTimer = window.setTimeout(() => {
+        const particles = $(
+          "[data-ambient-particles], #ambientParticles"
+        );
+
+        if (particles) {
+          particles.replaceChildren();
+          delete particles.dataset.generated;
+          createAmbientParticles();
+        }
+      }, 250);
+    });
+
+    document.documentElement.classList.add("js-ready");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+})();
