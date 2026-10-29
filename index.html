@@ -1,178 +1,1031 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elite Glassmorphism Portfolio Workspace</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="style.css">
-    <!-- Fonts & Icons -->
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cloudflare.com">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050810">
+  <meta name="color-scheme" content="dark">
+
+  <title>Data Analyst Portfolio | Learning in Public</title>
+  <meta name="description" content="An interactive Data Analyst learning portfolio featuring analytics projects, SQL, Python, statistics, business insights, and a glass-inspired digital experience.">
+  <meta name="author" content="YOUR_NAME">
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="style.css">
+
+  <meta property="og:title" content="Data Analyst Portfolio">
+  <meta property="og:description" content="Explore my data analytics learning journey, projects, and case studies.">
+  <meta property="og:type" content="website">
+
+  <script>
+    document.documentElement.classList.add("js-enabled");
+  </script>
 </head>
-<body>
 
-    <!-- SVG Filters for Advanced Liquid Glass Effects -->
-    <svg style="position: absolute; width: 0; height: 0;" width="0" height="0" version="1.1" xmlns="http://w3.org" xmlns:xlink="http://w3.org">
-        <defs>
-            <filter id="liquid-glass">
-                <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" />
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="25" xChannelSelector="R" yChannelSelector="G" />
-            </filter>
-        </defs>
-    </svg>
+<body data-theme="ice">
 
-    <!-- Canvas for Mouse Particle Fluid Interaction Behind Glass -->
-    <canvas id="particleCanvas"></canvas>
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <!-- 3D Moving Ambient Background Orbs -->
-    <div class="ambient-universe">
-        <div class="orb orb-primary" id="orb1"></div>
-        <div class="orb orb-secondary" id="orb2"></div>
-        <div class="orb orb-tertiary" id="orb3"></div>
-        <div class="orb orb-quaternary" id="orb4"></div>
+  <!-- =====================================================
+       PRELOADER
+       ===================================================== -->
+  <div class="preloader" id="preloader" aria-label="Loading portfolio">
+    <div class="preloader-brand">
+      <span class="brand-mark" aria-hidden="true">◇</span>
+      <span class="preloader-text">DATA / INSIGHT</span>
+    </div>
+    <span class="preloader-line" aria-hidden="true"></span>
+  </div>
+
+  <!-- =====================================================
+       BACKGROUND ATMOSPHERE
+       Fixed background layers remain visible while scrolling.
+       ===================================================== -->
+  <div class="site-atmosphere" aria-hidden="true">
+    <div class="atmosphere-gradient atmosphere-gradient-one"></div>
+    <div class="atmosphere-gradient atmosphere-gradient-two"></div>
+    <div class="atmosphere-gradient atmosphere-gradient-three"></div>
+    <div class="atmosphere-grid"></div>
+    <div class="atmosphere-noise"></div>
+    <div class="atmosphere-light atmosphere-light-one"></div>
+    <div class="atmosphere-light atmosphere-light-two"></div>
+    <div class="atmosphere-light atmosphere-light-three"></div>
+    <div class="ambient-particles" id="ambientParticles"></div>
+    <div class="cursor-glow" id="cursorGlow"></div>
+  </div>
+
+  <!-- =====================================================
+       FIXED GLASS CHARACTER
+       The character stays in the background during scrolling.
+       ===================================================== -->
+  <div class="character-stage" id="characterStage">
+    <div class="character-halo" aria-hidden="true"></div>
+    <div class="character-orbit character-orbit-one" aria-hidden="true"></div>
+    <div class="character-orbit character-orbit-two" aria-hidden="true"></div>
+
+    <div class="character-shadow" aria-hidden="true"></div>
+
+    <button
+      class="glass-character"
+      id="glassCharacter"
+      type="button"
+      aria-label="Interact with the portfolio character"
+      aria-describedby="characterHint"
+    >
+      <span class="character-glass-back" aria-hidden="true"></span>
+
+      <span class="character-hair character-hair-back" aria-hidden="true"></span>
+      <span class="character-head" aria-hidden="true">
+        <span class="character-hair character-hair-top"></span>
+        <span class="character-hair character-hair-left"></span>
+        <span class="character-hair character-hair-right"></span>
+
+        <span class="character-face">
+          <span class="character-eye character-eye-left">
+            <span class="character-eye-highlight"></span>
+          </span>
+          <span class="character-eye character-eye-right">
+            <span class="character-eye-highlight"></span>
+          </span>
+          <span class="character-blush character-blush-left"></span>
+          <span class="character-blush character-blush-right"></span>
+          <span class="character-mouth"></span>
+        </span>
+      </span>
+
+      <span class="character-body" aria-hidden="true">
+        <span class="character-collar"></span>
+        <span class="character-tie"></span>
+        <span class="character-body-highlight"></span>
+      </span>
+
+      <span class="character-hand character-hand-left" aria-hidden="true"></span>
+      <span class="character-hand character-hand-right" aria-hidden="true"></span>
+      <span class="character-foot character-foot-left" aria-hidden="true"></span>
+      <span class="character-foot character-foot-right" aria-hidden="true"></span>
+
+      <span class="character-reflection" aria-hidden="true"></span>
+    </button>
+
+    <div class="character-speech" id="characterSpeech" role="status" aria-live="polite">
+      <span class="speech-indicator" aria-hidden="true"></span>
+      <span id="characterSpeechText">Hello! Explore my data world.</span>
     </div>
 
-    <!-- Active Interactive Mascot Overlay Background Container -->
-    <div class="mascot-backdrop-container" id="mascotWrapper">
-        <!-- Embedded SVG Object dynamically tracked by JS -->
-        <object type="image/svg+xml" data="mascot.svg" id="interactiveMascot"></object>
+    <p class="character-hint" id="characterHint">
+      Tap me to interact
+    </p>
+  </div>
+
+  <!-- =====================================================
+       HANGING PENDANT LIGHT
+       The hanging cord is the main on/off interaction.
+       ===================================================== -->
+  <div class="pendant-system" id="pendantSystem">
+    <div class="pendant-ceiling-anchor" aria-hidden="true"></div>
+
+    <button
+      class="pendant-pull"
+      id="pendantPull"
+      type="button"
+      aria-label="Pull the pendant cord to toggle the ambient light"
+      aria-pressed="false"
+      title="Pull to switch the light on or off"
+    >
+      <span class="pendant-cord" aria-hidden="true"></span>
+      <span class="pendant-pull-handle" aria-hidden="true"></span>
+    </button>
+
+    <div class="pendant-lamp" id="pendantLamp" aria-hidden="true">
+      <span class="pendant-neck"></span>
+      <span class="pendant-glass-shell"></span>
+      <span class="pendant-inner-glow"></span>
+      <span class="pendant-diffuser"></span>
+      <span class="pendant-bottom-detail"></span>
     </div>
 
-    <!-- Ultra-Glass Modern Workspace Container -->
-    <div class="master-workspace-glass">
-        
-        <!-- Left Glass Dashboard Controls / Sidebar -->
-        <aside class="dashboard-sidebar">
-            <div class="brand-panel">
-                <div class="brand-icon">
-                    <i class="fa-solid fa-compass-drafting"></i>
-                </div>
-                <div class="brand-text">
-                    <h2>CREATIVE</h2>
-                    <span>WORKSPACE v2.5</span>
-                </div>
+    <div class="pendant-light-cone" id="pendantLightCone" aria-hidden="true"></div>
+    <span class="pendant-status" id="pendantStatus" role="status">LIGHT OFF</span>
+  </div>
+
+  <!-- =====================================================
+       HEADER / NAVIGATION
+       ===================================================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+
+      <a class="site-brand" href="#home" aria-label="Go to portfolio home">
+        <span class="brand-symbol" aria-hidden="true">
+          <span class="brand-symbol-core"></span>
+        </span>
+        <span class="brand-wordmark">
+          <span class="brand-name">DATA<span class="brand-slash">/</span>INSIGHT</span>
+          <span class="brand-caption">ANALYTICS • LEARNING • DISCOVERY</span>
+        </span>
+      </a>
+
+      <button
+        class="mobile-menu-toggle"
+        id="mobileMenuToggle"
+        type="button"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+        aria-controls="primaryNavigation"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="primary-navigation" id="primaryNavigation" aria-label="Main navigation">
+        <a class="nav-link is-active" href="#home">Home</a>
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#skills">Skills</a>
+        <a class="nav-link" href="#projects">Projects</a>
+        <a class="nav-link" href="#case-studies">Case Studies</a>
+        <a class="nav-link" href="#learning">Learning</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
+
+      <button class="header-settings-button" id="openSettings" type="button">
+        <span class="settings-button-icon" aria-hidden="true">✳</span>
+        <span>Customize</span>
+      </button>
+    </div>
+
+    <div class="header-hairline" aria-hidden="true"></div>
+  </header>
+
+  <!-- =====================================================
+       SCROLL PROGRESS
+       ===================================================== -->
+  <div class="scroll-progress-track" aria-hidden="true">
+    <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+  </div>
+
+  <!-- =====================================================
+       FLOATING RIGHT BADGE
+       ===================================================== -->
+  <a class="side-badge" href="#about" aria-label="Explore this portfolio">
+    <span class="side-badge-mark">D.</span>
+    <span class="side-badge-label">DATA EXPLORER</span>
+  </a>
+
+  <main id="main-content">
+
+    <!-- ===================================================
+         HERO
+         =================================================== -->
+    <section class="hero-section page-section" id="home">
+      <div class="hero-backdrop-word" aria-hidden="true">INSIGHTS</div>
+
+      <div class="hero-content reveal-on-scroll">
+        <p class="eyebrow">
+          <span class="eyebrow-dot"></span>
+          DATA ANALYST IN THE MAKING
+        </p>
+
+        <h1 class="hero-title">
+          Turning raw data
+          <span class="hero-title-accent">into insight.</span>
+        </h1>
+
+        <p class="hero-description">
+          I am building practical skills in data analysis, statistics,
+          SQL, Python, and business problem-solving—one project at a time.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary magnetic-button" href="#projects">
+            <span>Explore Projects</span>
+            <span class="button-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <a class="button button-glass magnetic-button" href="#about">
+            <span>Discover My Journey</span>
+            <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+
+        <div class="hero-meta">
+          <span class="availability-indicator"></span>
+          <span>Learning in public</span>
+          <span class="meta-divider">/</span>
+          <span>Building practical skills</span>
+        </div>
+      </div>
+
+      <div class="hero-art-space" aria-hidden="true">
+        <div class="hero-art-ring hero-art-ring-one"></div>
+        <div class="hero-art-ring hero-art-ring-two"></div>
+        <div class="hero-glass-orb hero-glass-orb-one"></div>
+        <div class="hero-glass-orb hero-glass-orb-two"></div>
+        <div class="hero-glass-orb hero-glass-orb-three"></div>
+        <div class="hero-art-ground"></div>
+      </div>
+
+      <a class="scroll-cue" href="#about" aria-label="Scroll to About section">
+        <span class="scroll-cue-line"></span>
+        <span>SCROLL TO EXPLORE</span>
+      </a>
+    </section>
+
+    <!-- ===================================================
+         ABOUT
+         =================================================== -->
+    <section class="about-section page-section" id="about">
+      <div class="section-heading reveal-on-scroll">
+        <p class="section-kicker">01 / THE PERSON BEHIND THE DATA</p>
+        <h2 class="section-title">
+          Curious by nature.
+          <span class="text-gradient">Analytical by practice.</span>
+        </h2>
+        <p class="section-intro">
+          My goal is to learn how to transform messy information into
+          clear findings that help people make better decisions.
+        </p>
+      </div>
+
+      <div class="about-layout">
+        <article class="glass-card about-main-card elastic-card reveal-on-scroll">
+          <span class="card-index">A / ABOUT ME</span>
+          <h3>Learning with purpose</h3>
+          <p>
+            I am developing my data analytics foundation through structured
+            learning, practical exercises, and projects. This portfolio
+            documents my progress honestly, including what I am learning
+            and what I still need to improve.
+          </p>
+          <p>
+            I am interested in understanding business questions, cleaning
+            data carefully, finding patterns, and communicating results
+            in a way that is useful and understandable.
+          </p>
+          <a class="text-link" href="#learning">
+            Follow my learning journey <span aria-hidden="true">↗</span>
+          </a>
+        </article>
+
+        <div class="about-side-stack">
+          <article class="glass-card mini-info-card elastic-card reveal-on-scroll">
+            <span class="mini-info-icon" aria-hidden="true">⌘</span>
+            <div>
+              <h3>My approach</h3>
+              <p>Understand the question before analyzing the numbers.</p>
             </div>
+          </article>
 
-            <!-- Dynamic Theme Engine Panel inside Glass -->
-            <div class="theme-engine-card">
-                <span class="control-label"><i class="fa-solid fa-palette"></i> Chromatic Aura Engine</span>
-                <div class="theme-switches-grid">
-                    <button class="theme-btn active" data-hue="280" data-sat="85%" data-light="60%" style="background: linear-gradient(135deg, #a855f7, #6366f1);"></button>
-                    <button class="theme-btn" data-hue="190" data-sat="95%" data-light="50%" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"></button>
-                    <button class="theme-btn" data-hue="330" data-sat="90%" data-light="55%" style="background: linear-gradient(135deg, #ec4899, #f43f5e);"></button>
-                    <button class="theme-btn" data-hue="150" data-sat="80%" data-light="50%" style="background: linear-gradient(135deg, #10b981, #059669);"></button>
-                    <button class="theme-btn" data-hue="35" data-sat="95%" data-light="55%" style="background: linear-gradient(135deg, #f59e0b, #d97706);"></button>
-                </div>
-                <div class="slider-control">
-                    <div class="slider-header">
-                        <span>Aura Multiplier</span>
-                        <span id="auraVal">40px</span>
-                    </div>
-                    <input type="range" id="blurSlider" min="10" max="100" value="40">
-                </div>
+          <article class="glass-card mini-info-card elastic-card reveal-on-scroll">
+            <span class="mini-info-icon" aria-hidden="true">◎</span>
+            <div>
+              <h3>My priority</h3>
+              <p>Build reliable foundations through real practice.</p>
             </div>
+          </article>
 
-            <!-- Dashboard Nav Menu -->
-            <nav class="dashboard-navigation">
-                <a href="#matrix-home" class="nav-item active">
-                    <span class="nav-icon"><i class="fa-solid fa-cube"></i></span>
-                    <span class="nav-text">Core Matrix</span>
-                </a>
-                <a href="#lab-work" class="nav-item">
-                    <span class="nav-icon"><i class="fa-solid fa-flask-vial"></i></span>
-                    <span class="nav-text">Project Lab</span>
-                </a>
-                <a href="#terminal-connect" class="nav-item">
-                    <span class="nav-icon"><i class="fa-solid fa-terminal"></i></span>
-                    <span class="nav-text">Link Terminal</span>
-                </a>
-            </nav>
-
-            <!-- Bottom Profile status bar -->
-            <div class="profile-status-bar">
-                <div class="user-avatar-zone">
-                    <i class="fa-solid fa-fingerprint"></i>
-                    <span class="pulse-online"></span>
-                </div>
-                <div class="user-meta">
-                    <h4>SYSTEM ARCHITECT</h4>
-                    <p>Secured Node: online</p>
-                </div>
+          <article class="glass-card mini-info-card elastic-card reveal-on-scroll">
+            <span class="mini-info-icon" aria-hidden="true">↗</span>
+            <div>
+              <h3>My direction</h3>
+              <p>Grow toward job-ready analytics and business insight.</p>
             </div>
-        </aside>
+          </article>
+        </div>
+      </div>
+    </section>
 
-        <!-- Right Content Presentation Hub -->
-        <main class="presentation-hub">
-            
-            <!-- CORE MATRIX SECTION -->
-            <section id="matrix-home" class="viewport-section active">
-                <div class="hero-glass-banner">
-                    <span class="badge"><i class="fa-solid fa-shield-halved"></i> Interactive UI Module Active</span>
-                    <h1 class="glitch-title">Architecting the Translucent Futures</h1>
-                    <p class="subtitle-text">Empowering user experiences via fluid animations, deep glassmorphism grids, and organic particle simulations wrapped in rich reactive code vectors.</p>
-                    <div class="interactive-action-row">
-                        <a href="#lab-work" class="action-glass-btn primary-intent call-to-action-trigger">Explore Vault <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                        <button class="action-glass-btn alternative-intent" id="triggerMascotWave">Signal Mascot <i class="fa-solid fa-wand-magic-sparkles"></i></button>
-                    </div>
-                </div>
+    <!-- ===================================================
+         WHAT I BUILD / SERVICES
+         =================================================== -->
+    <section class="services-section page-section" id="services">
+      <div class="services-backdrop-word" aria-hidden="true">SERVICES</div>
 
-                <!-- Feature Metrics Cluster -->
-                <div class="matrix-grid-showcase">
-                    <div class="metric-glass-card">
-                        <div class="card-icon-wrapper secondary-color"><i class="fa-solid fa-bolt-lightning"></i></div>
-                        <h3>Adaptive Styling</h3>
-                        <p>Fully dynamic real-time customized CSS variables rendering system directly updating complex shaders dynamically.</p>
-                    </div>
-                    <div class="metric-glass-card">
-                        <div class="card-icon-wrapper tertiary-color"><i class="fa-solid fa-bezier-curve"></i></div>
-                        <h3>Reactive Mascot</h3>
-                        <p>Vector system communicating with DOM cursor movements to intelligently execute complex interactive visual tracking transformations.</p>
-                    </div>
-                    <div class="metric-glass-card">
-                        <div class="card-icon-wrapper quaternary-color"><i class="fa-solid fa-fingerprint"></i></div>
-                        <h3>Glass Shaders</h3>
-                        <p>Advanced cross-browser multi-layered backdrop filters calibrated with subtle noise textures and precise border reflections.</p>
-                    </div>
-                </div>
-            </section>
+      <div class="section-heading reveal-on-scroll">
+        <p class="section-kicker">02 / WHAT I BUILD</p>
+        <h2 class="section-title">
+          From raw rows
+          <span class="text-gradient">to clear answers.</span>
+        </h2>
+        <p class="section-intro">
+          The analytical workflow I am learning to use, from understanding
+          a problem to presenting a useful result.
+        </p>
+      </div>
 
-            <!-- PROJECT LAB SECTION -->
-            <section id="lab-work" class="viewport-section">
-                <div class="section-header-row">
-                    <div>
-                        <span class="section-tag">Production Repositories</span>
-                        <h2>The Development Pipeline</h2>
-                    </div>
-                    <div class="filter-controls-glass">
-                        <button class="filter-btn active">All Nodes</button>
-                        <button class="filter-btn">Web3</button>
-                        <button class="filter-btn">AI Systems</button>
-                    </div>
-                </div>
+      <div class="services-grid">
 
-                <div class="projects-vault-layout">
-                    <!-- Project Alpha -->
-                    <div class="vault-item-card">
-                        <div class="vault-card-body">
-                            <span class="project-node-id">NODE // 001</span>
-                            <h3>Neural Interface Engine</h3>
-                            <p>Deep dashboard system parsing multidimensional arrays rendered in optimized hardware-accelerated canvas layers.</p>
-                            <div class="tech-tag-row">
-                                <span class="tag">WebGL</span>
-                                <span class="tag">Next.js</span>
-                                <span class="tag">Tailwind</span>
-                            </div>
-                        </div>
-                        <div class="vault-card-footer">
-                            <a href="#" class="vault-link">Launch Module <i class="fa-solid fa-angle-right"></i></a>
-                        </div>
-                    </div>
+        <article class="glass-card service-card elastic-card reveal-on-scroll">
+          <div class="service-card-top">
+            <span class="service-icon" aria-hidden="true">⌘</span>
+            <span class="service-number">01</span>
+          </div>
+          <h3>Data Cleaning</h3>
+          <p>
+            Identify missing values, duplicates, inconsistent formats,
+            and other data quality problems before analysis.
+          </p>
+          <a href="#skills" class="service-link" aria-label="Explore data cleaning skills">
+            <span>Explore skill</span><span aria-hidden="true">↗</span>
+          </a>
+        </article>
 
-                    <!-- Project Beta -->
-                    <div class="vault-item-card">
-                        <div class="vault-card-body">
-                            <span class="project-node-id">NODE // 002</span>
-                            <h3>Ethereal DeFi Terminal</h3>
+        <article class="glass-card service-card elastic-card reveal-on-scroll">
+          <div class="service-card-top">
+            <span class="service-icon" aria-hidden="true">▥</span>
+            <span class="service-number">02</span>
+          </div>
+          <h3>Data Analysis</h3>
+          <p>
+            Use SQL, spreadsheets, Python, and statistical reasoning
+            to investigate questions and identify patterns.
+          </p>
+          <a href="#projects" class="service-link" aria-label="Explore data analysis projects">
+            <span>Explore projects</span><span aria-hidden="true">↗</span>
+          </a>
+        </article>
+
+        <article class="glass-card service-card elastic-card reveal-on-scroll">
+          <div class="service-card-top">
+            <span class="service-icon" aria-hidden="true">⌁</span>
+            <span class="service-number">03</span>
+          </div>
+          <h3>Data Storytelling</h3>
+          <p>
+            Present findings through understandable visualizations,
+            concise explanations, and decision-focused reporting.
+          </p>
+          <a href="#case-studies" class="service-link" aria-label="Explore case studies">
+            <span>Explore approach</span><span aria-hidden="true">↗</span>
+          </a>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===================================================
+         SKILLS
+         =================================================== -->
+    <section class="skills-section page-section" id="skills">
+      <div class="section-heading reveal-on-scroll">
+        <p class="section-kicker">03 / TOOLS & FOUNDATIONS</p>
+        <h2 class="section-title">
+          The toolkit
+          <span class="text-gradient">I am developing.</span>
+        </h2>
+        <p class="section-intro">
+          Skills are listed as learning areas, not as claims of professional
+          mastery. Their status should be updated as I gain practical evidence.
+        </p>
+      </div>
+
+      <div class="skills-grid">
+
+        <article class="glass-card skill-card elastic-card reveal-on-scroll">
+          <div class="skill-card-heading">
+            <span class="skill-symbol">XLS</span>
+            <span class="skill-status">Learning</span>
+          </div>
+          <h3>Spreadsheets</h3>
+          <p>Excel fundamentals, formulas, data organization, pivot tables, and reporting.</p>
+          <div class="skill-tags">
+            <span>Excel</span><span>Pivot Tables</span><span>Cleaning</span>
+          </div>
+        </article>
+
+        <article class="glass-card skill-card elastic-card reveal-on-scroll">
+          <div class="skill-card-heading">
+            <span class="skill-symbol">SQL</span>
+            <span class="skill-status">Learning</span>
+          </div>
+          <h3>Database querying</h3>
+          <p>Retrieve, filter, group, combine, and analyze data with SQL.</p>
+          <div class="skill-tags">
+            <span>SELECT</span><span>JOIN</span><span>CTE</span><span>Windows</span>
+          </div>
+        </article>
+
+        <article class="glass-card skill-card elastic-card reveal-on-scroll">
+          <div class="skill-card-heading">
+            <span class="skill-symbol">Py</span>
+            <span class="skill-status">Learning</span>
+          </div>
+          <h3>Python analytics</h3>
+          <p>Develop programming fundamentals and use data analysis libraries.</p>
+          <div class="skill-tags">
+            <span>Python</span><span>pandas</span><span>NumPy</span>
+          </div>
+        </article>
+
+        <article class="glass-card skill-card elastic-card reveal-on-scroll">
+          <div class="skill-card-heading">
+            <span class="skill-symbol">Σ</span>
+            <span class="skill-status">Learning</span>
+          </div>
+          <h3>Statistics</h3>
+          <p>Understand distributions, descriptive statistics, uncertainty, and inference.</p>
+          <div class="skill-tags">
+            <span>Descriptive</span><span>Probability</span><span>Inference</span>
+          </div>
+        </article>
+
+        <article class="glass-card skill-card elastic-card reveal-on-scroll">
+          <div class="skill-card-heading">
+            <span class="skill-symbol">BI</span>
+            <span class="skill-status">Learning</span>
+          </div>
+          <h3>Visualization</h3>
+          <p>Communicate data with charts, dashboards, and clear visual explanations.</p>
+          <div class="skill-tags">
+            <span>Power BI</span><span>Matplotlib</span><span>Seaborn</span>
+          </div>
+        </article>
+
+        <article class="glass-card skill-card elastic-card reveal-on-scroll">
+          <div class="skill-card-heading">
+            <span class="skill-symbol">AI</span>
+            <span class="skill-status">Exploring</span>
+          </div>
+          <h3>AI-assisted analysis</h3>
+          <p>Use AI to support learning, debugging, documentation, and critical review.</p>
+          <div class="skill-tags">
+            <span>Prompting</span><span>Validation</span><span>Documentation</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===================================================
+         PROJECTS
+         Replace sample descriptions with genuine work as it
+         is completed. Do not claim results that are not real.
+         =================================================== -->
+    <section class="projects-section page-section" id="projects">
+      <div class="section-heading reveal-on-scroll">
+        <p class="section-kicker">04 / SELECTED WORK</p>
+        <h2 class="section-title">
+          Practice that becomes
+          <span class="text-gradient">proof of skill.</span>
+        </h2>
+        <p class="section-intro">
+          A space for completed projects with reproducible methods,
+          documented decisions, and honest explanations of the results.
+        </p>
+      </div>
+
+      <div class="project-filters" role="group" aria-label="Filter projects">
+        <button class="filter-button is-active" type="button" data-project-filter="all" aria-pressed="true">All</button>
+        <button class="filter-button" type="button" data-project-filter="sql" aria-pressed="false">SQL</button>
+        <button class="filter-button" type="button" data-project-filter="python" aria-pressed="false">Python</button>
+        <button class="filter-button" type="button" data-project-filter="visualization" aria-pressed="false">Visualization</button>
+        <button class="filter-button" type="button" data-project-filter="business" aria-pressed="false">Business</button>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid">
+
+        <article class="glass-card project-card elastic-card reveal-on-scroll" data-project-category="sql">
+          <div class="project-visual project-visual-one">
+            <span class="project-visual-label">QUERY / EXPLORE / EXPLAIN</span>
+            <div class="mini-code-window" aria-hidden="true">
+              <span>SELECT</span>
+              <span class="code-indent">category,</span>
+              <span class="code-indent">COUNT(*)</span>
+              <span>FROM dataset</span>
+              <span>GROUP BY category;</span>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-meta">
+              <span>SQL</span><span>Practice project</span>
+            </div>
+            <h3>Exploratory SQL Analysis</h3>
+            <p>
+              A planned project to answer structured questions with filtering,
+              aggregation, joins, and documented queries.
+            </p>
+            <div class="project-card-footer">
+              <span class="project-status">Planned / In progress</span>
+              <a class="icon-link" href="#learning" aria-label="See learning progress for SQL analysis">↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="glass-card project-card elastic-card reveal-on-scroll" data-project-category="python">
+          <div class="project-visual project-visual-two">
+            <span class="project-visual-label">CLEAN / TRANSFORM / ANALYZE</span>
+            <div class="mini-data-visual" aria-hidden="true">
+              <span style="--bar-height: 32%"></span>
+              <span style="--bar-height: 58%"></span>
+              <span style="--bar-height: 45%"></span>
+              <span style="--bar-height: 82%"></span>
+              <span style="--bar-height: 67%"></span>
+              <span style="--bar-height: 94%"></span>
+              <span style="--bar-height: 72%"></span>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-meta">
+              <span>PYTHON</span><span>Practice project</span>
+            </div>
+            <h3>Data Cleaning Notebook</h3>
+            <p>
+              A planned notebook documenting missing values, duplicates,
+              data types, transformations, and validation checks.
+            </p>
+            <div class="project-card-footer">
+              <span class="project-status">Planned / In progress</span>
+              <a class="icon-link" href="#learning" aria-label="See learning progress for Python">↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="glass-card project-card elastic-card reveal-on-scroll" data-project-category="visualization">
+          <div class="project-visual project-visual-three">
+            <span class="project-visual-label">MEASURE / COMPARE / COMMUNICATE</span>
+            <div class="mini-chart-visual" aria-hidden="true">
+              <span class="chart-line chart-line-one"></span>
+              <span class="chart-line chart-line-two"></span>
+              <span class="chart-point chart-point-one"></span>
+              <span class="chart-point chart-point-two"></span>
+              <span class="chart-point chart-point-three"></span>
+              <span class="chart-point chart-point-four"></span>
+            </div>
+          </div>
+          <div class="project-card-body">
+            <div class="project-meta">
+              <span>VISUALIZATION</span><span>Practice project</span>
+            </div>
+            <h3>Insight Dashboard</h3>
+            <p>
+              A planned dashboard focused on meaningful KPIs, clear chart
+              choices, comparisons, and actionable explanations.
+            </p>
+            <div class="project-card-footer">
+              <span class="project-status">Planned / In progress</span>
+              <a class="icon-link" href="#learning" aria-label="See learning progress for dashboards">↗</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="section-footnote">
+        Project descriptions are starter examples. Update their status and
+        add repository links only when the corresponding work genuinely exists.
+      </p>
+    </section>
+
+    <!-- ===================================================
+         CASE STUDIES
+         =================================================== -->
+    <section class="case-studies-section page-section" id="case-studies">
+      <div class="section-heading reveal-on-scroll">
+        <p class="section-kicker">05 / HOW I THINK</p>
+        <h2 class="section-title">
+          Start with a question.
+          <span class="text-gradient">Finish with evidence.</span>
+        </h2>
+        <p class="section-intro">
+          A repeatable framework for turning an ambiguous business problem
+          into a transparent analytical investigation.
+        </p>
+      </div>
+
+      <div class="case-study-list">
+
+        <article class="glass-card case-study-card elastic-card reveal-on-scroll">
+          <span class="case-study-number">CASE / 01</span>
+          <div class="case-study-main">
+            <h3>Why might sales be changing?</h3>
+            <p>
+              Define the metric, confirm the time period, check data quality,
+              segment results, and investigate plausible drivers before
+              suggesting an explanation.
+            </p>
+            <div class="case-study-tags">
+              <span>KPI definition</span><span>Segmentation</span><span>Root cause</span>
+            </div>
+          </div>
+          <span class="case-study-arrow" aria-hidden="true">↗</span>
+        </article>
+
+        <article class="glass-card case-study-card elastic-card reveal-on-scroll">
+          <span class="case-study-number">CASE / 02</span>
+          <div class="case-study-main">
+            <h3>Where might a funnel lose users?</h3>
+            <p>
+              Define funnel stages, calculate conversion rates with clear
+              denominators, compare stage-to-stage drop-offs, and investigate
+              potential friction points.
+            </p>
+            <div class="case-study-tags">
+              <span>Conversion</span><span>Funnel analysis</span><span>Metrics</span>
+            </div>
+          </div>
+          <span class="case-study-arrow" aria-hidden="true">↗</span>
+        </article>
+
+        <article class="glass-card case-study-card elastic-card reveal-on-scroll">
+          <span class="case-study-number">CASE / 03</span>
+          <div class="case-study-main">
+            <h3>Are customers returning?</h3>
+            <p>
+              Define a cohort and retention rule, compare customer groups
+              over time, and distinguish observed patterns from causal claims.
+            </p>
+            <div class="case-study-tags">
+              <span>Cohort analysis</span><span>Retention</span><span>Statistics</span>
+            </div>
+          </div>
+          <span class="case-study-arrow" aria-hidden="true">↗</span>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===================================================
+         LEARNING JOURNEY
+         =================================================== -->
+    <section class="learning-section page-section" id="learning">
+      <div class="section-heading reveal-on-scroll">
+        <p class="section-kicker">06 / CONTINUOUS IMPROVEMENT</p>
+        <h2 class="section-title">
+          Learn. Practice.
+          <span class="text-gradient">Document. Improve.</span>
+        </h2>
+        <p class="section-intro">
+          A living record of the topics I am studying and the evidence
+          I produce as I practise them.
+        </p>
+      </div>
+
+      <div class="learning-layout">
+        <article class="glass-card learning-roadmap elastic-card reveal-on-scroll">
+          <div class="learning-card-heading">
+            <div>
+              <span class="card-index">MY ROADMAP</span>
+              <h3>Building the foundations</h3>
+            </div>
+            <span class="learning-symbol" aria-hidden="true">⌁</span>
+          </div>
+
+          <ol class="learning-timeline">
+            <li class="timeline-item">
+              <span class="timeline-marker"></span>
+              <div>
+                <h4>Spreadsheet fundamentals</h4>
+                <p>Formulas, cleaning, sorting, filtering, and summaries.</p>
+                <span class="timeline-status">Study and practice</span>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-marker"></span>
+              <div>
+                <h4>SQL and relational data</h4>
+                <p>Queries, joins, aggregation, subqueries, and window functions.</p>
+                <span class="timeline-status">Study and practice</span>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-marker"></span>
+              <div>
+                <h4>Statistics and analytical reasoning</h4>
+                <p>Distributions, variability, sampling, and inference.</p>
+                <span class="timeline-status">Study and practice</span>
+              </div>
+            </li>
+            <li class="timeline-item">
+              <span class="timeline-marker"></span>
+              <div>
+                <h4>Python and visualization</h4>
+                <p>Data manipulation, exploratory analysis, and chart design.</p>
+                <span class="timeline-status">Study and practice</span>
+              </div>
+            </li>
+          </ol>
+        </article>
+
+        <article class="glass-card learning-principles elastic-card reveal-on-scroll">
+          <span class="card-index">MY PRINCIPLES</span>
+          <h3>Good analysis is more than a chart.</h3>
+          <ul class="principles-list">
+            <li><span aria-hidden="true">01</span><span>Clarify the business question.</span></li>
+            <li><span aria-hidden="true">02</span><span>Check data quality and definitions.</span></li>
+            <li><span aria-hidden="true">03</span><span>Choose methods that fit the question.</span></li>
+            <li><span aria-hidden="true">04</span><span>Validate findings before sharing them.</span></li>
+            <li><span aria-hidden="true">05</span><span>Explain limitations and uncertainty.</span></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         CONTACT
+         =================================================== -->
+    <section class="contact-section page-section" id="contact">
+      <div class="contact-glow" aria-hidden="true"></div>
+
+      <div class="contact-content reveal-on-scroll">
+        <p class="section-kicker">07 / LET'S CONNECT</p>
+        <h2 class="section-title">
+          Good questions lead
+          <span class="text-gradient">to better insights.</span>
+        </h2>
+        <p class="section-intro">
+          Interested in data, analytical thinking, or learning together?
+          You can find my public work through the links below.
+        </p>
+
+        <div class="contact-actions">
+          <!-- Replace these placeholder URLs with your real profiles. -->
+          <a class="button button-primary magnetic-button"
+             href="https://github.com/"
+             target="_blank"
+             rel="noopener noreferrer">
+            <span>GitHub Profile</span><span aria-hidden="true">↗</span>
+          </a>
+
+          <a class="button button-glass magnetic-button"
+             href="https://www.linkedin.com/"
+             target="_blank"
+             rel="noopener noreferrer">
+            <span>LinkedIn Profile</span><span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <p class="contact-note">
+          Replace the example profile links with your actual public profile URLs.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="footer-brand" href="#home">DATA<span>/</span>INSIGHT</a>
+      <p>Built while learning. Improved through practice.</p>
+      <a class="back-to-top" href="#home">Back to top ↑</a>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="currentYear">2026</span> Data Analyst Learning Portfolio</span>
+      <span>Curiosity → Evidence → Insight</span>
+    </div>
+  </footer>
+
+  <!-- =====================================================
+       CUSTOMIZATION PANEL
+       ===================================================== -->
+  <div class="settings-overlay" id="settingsOverlay" hidden></div>
+
+  <aside
+    class="settings-panel"
+    id="settingsPanel"
+    aria-label="Portfolio appearance settings"
+    aria-hidden="true"
+    inert
+  >
+    <div class="settings-panel-header">
+      <div>
+        <p class="section-kicker">PERSONALIZE YOUR EXPERIENCE</p>
+        <h2>Glass Studio</h2>
+      </div>
+      <button class="icon-button" id="closeSettings" type="button" aria-label="Close settings">×</button>
+    </div>
+
+    <p class="settings-description">
+      Choose one accent theme. The portfolio's highlights, glass edges,
+      ambient lighting, and particles should follow that colour.
+    </p>
+
+    <section class="settings-group" aria-labelledby="themeSettingsTitle">
+      <h3 id="themeSettingsTitle">01 / Accent colour</h3>
+      <div class="theme-options" role="group" aria-label="Choose portfolio colour theme">
+        <button class="theme-option is-selected" type="button" data-theme-choice="ice" aria-pressed="true">
+          <span class="theme-swatch theme-swatch-ice"></span>
+          <span>Ice Blue</span>
+        </button>
+        <button class="theme-option" type="button" data-theme-choice="lavender" aria-pressed="false">
+          <span class="theme-swatch theme-swatch-lavender"></span>
+          <span>Lavender</span>
+        </button>
+        <button class="theme-option" type="button" data-theme-choice="mint" aria-pressed="false">
+          <span class="theme-swatch theme-swatch-mint"></span>
+          <span>Mint</span>
+        </button>
+        <button class="theme-option" type="button" data-theme-choice="rose" aria-pressed="false">
+          <span class="theme-swatch theme-swatch-rose"></span>
+          <span>Rose</span>
+        </button>
+        <button class="theme-option" type="button" data-theme-choice="amber" aria-pressed="false">
+          <span class="theme-swatch theme-swatch-amber"></span>
+          <span>Warm Amber</span>
+        </button>
+        <button class="theme-option" type="button" data-theme-choice="violet" aria-pressed="false">
+          <span class="theme-swatch theme-swatch-violet"></span>
+          <span>Electric Violet</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="settings-group" aria-labelledby="glassSettingsTitle">
+      <h3 id="glassSettingsTitle">02 / Liquid glass</h3>
+
+      <label class="setting-control" for="glassBlur">
+        <span>Glass blur</span><output id="glassBlurValue" for="glassBlur">18px</output>
+      </label>
+      <input id="glassBlur" name="glassBlur" type="range" min="4" max="36" value="18">
+
+      <label class="setting-control" for="glassOpacity">
+        <span>Glass opacity</span><output id="glassOpacityValue" for="glassOpacity">14%</output>
+      </label>
+      <input id="glassOpacity" name="glassOpacity" type="range" min="5" max="35" value="14">
+
+      <label class="setting-control" for="borderOpacity">
+        <span>Border brightness</span><output id="borderOpacityValue" for="borderOpacity">28%</output>
+      </label>
+      <input id="borderOpacity" name="borderOpacity" type="range" min="5" max="55" value="28">
+
+      <label class="setting-control" for="cardRadius">
+        <span>Corner radius</span><output id="cardRadiusValue" for="cardRadius">22px</output>
+      </label>
+      <input id="cardRadius" name="cardRadius" type="range" min="8" max="36" value="22">
+    </section>
+
+    <section class="settings-group" aria-labelledby="motionSettingsTitle">
+      <h3 id="motionSettingsTitle">03 / Motion and atmosphere</h3>
+
+      <label class="setting-control" for="particleAmount">
+        <span>Floating particles</span><output id="particleAmountValue" for="particleAmount">18</output>
+      </label>
+      <input id="particleAmount" name="particleAmount" type="range" min="0" max="40" value="18">
+
+      <label class="setting-control" for="motionIntensity">
+        <span>Animation intensity</span><output id="motionIntensityValue" for="motionIntensity">50%</output>
+      </label>
+      <input id="motionIntensity" name="motionIntensity" type="range" min="0" max="100" value="50">
+
+      <label class="setting-control" for="elasticIntensity">
+        <span>Elastic stretch</span><output id="elasticIntensityValue" for="elasticIntensity">45%</output>
+      </label>
+      <input id="elasticIntensity" name="elasticIntensity" type="range" min="0" max="100" value="45">
+
+      <label class="setting-toggle" for="characterMotion">
+        <span>
+          <strong>Character animation</strong>
+          <small>Floating, blinking, and reactions</small>
+        </span>
+        <input id="characterMotion" type="checkbox" checked>
+        <span class="toggle-track" aria-hidden="true"></span>
+      </label>
+
+      <label class="setting-toggle" for="ambientMotion">
+        <span>
+          <strong>Ambient particles</strong>
+          <small>Slow drifting colour-matched particles</small>
+        </span>
+        <input id="ambientMotion" type="checkbox" checked>
+        <span class="toggle-track" aria-hidden="true"></span>
+      </label>
+    </section>
+
+    <section class="settings-group" aria-labelledby="accessibilitySettingsTitle">
+      <h3 id="accessibilitySettingsTitle">04 / Accessibility</h3>
+      <label class="setting-toggle" for="reduceMotion">
+        <span>
+          <strong>Reduce motion</strong>
+          <small>Minimize movement and transitions</small>
+        </span>
+        <input id="reduceMotion" type="checkbox">
+        <span class="toggle-track" aria-hidden="true"></span>
+      </label>
+    </section>
+
+    <div class="settings-panel-actions">
+      <button class="button button-primary" id="saveSettings" type="button">Save preferences</button>
+      <button class="button button-glass" id="resetSettings" type="button">Reset</button>
+    </div>
+
+    <p class="settings-feedback" id="settingsFeedback" role="status" aria-live="polite"></p>
+  </aside>
+
+  <!-- =====================================================
+       FLOATING CONTROLS
+       ===================================================== -->
+  <div class="floating-controls">
+    <button
+      class="floating-control sound-control"
+      id="soundToggle"
+      type="button"
+      aria-label="Toggle sound effects"
+      aria-pressed="false"
+      title="Sound effects"
+    >
+      <span class="sound-icon" aria-hidden="true">♪</span>
+    </button>
+
+    <button
+      class="floating-control chat-control"
+      id="chatToggle"
+      type="button"
+      aria-label="Open portfolio helper"
+      aria-expanded="false"
+      aria-controls="chatPanel"
+      title="Portfolio helper"
+    >
+      <span class="chat-icon" aria-hidden="true">☏</span>
+      <span class="chat-notification" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <!-- =====================================================
+       PORTFOLIO HELPER
+       This is a local interactive helper, not a live AI service.
+       ===================================================== -->
+  <aside class="chat-panel" id="chatPanel" aria-label="Portfolio helper" aria-hidden="true" inert>
+    <div class="chat-panel-header">
+      <div>
+        <span class="chat-status-dot"></span>
+        <strong>Portfolio Guide</strong>
+        <small>Interactive guide</small>
+      </div>
+      <button class="icon-button" id="chatClose" type="button" aria-label="Close portfolio helper">×</button>
+    </div>
+
+    <div class="chat-messages" id="chatMessages" aria-live="polite">
+      <div class="chat-message chat-message-assistant">
+        Hi! Choose a topic and I'll take you to the relevant portfolio section.
+      </div>
+    </div>
+
+    <div class="chat-suggestions" id="chatSuggestions">
+      <button type="button" data-chat-topic="projects">Projects</button>
+      <button type="button" data-chat-topic="skills">Skills</button>
+      <button type="button" data-chat-topic="learning">Learning plan</button>
+      <button type="button" data-chat-topic="contact">Contact</button>
+    </div>
+  </aside>
+
+  <!-- =====================================================
+       PROJECT DETAIL DIALOG
+       ===================================================== -->
+  <dialog class="project-dialog" id="projectDialog" aria-labelledby="projectDialogTitle">
+    <div class="project-dialog-inner">
+      <button class="icon-button project-dialog-close" id="closeProjectDialog" type="button" aria-label="Close project details">×</button>
+      <p class="section-kicker" id="projectDialogKicker">PROJECT DETAILS</p>
+      <h2 id="projectDialogTitle">Project title</h2>
+      <div id="projectDialogContent">
+        <p>Project details will appear here.</p>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- =====================================================
+       BACKGROUND EFFECTS AND INTERACTIONS
+       ===================================================== -->
+  <script src="script.js" defer></script>
+</body>
+</html>
